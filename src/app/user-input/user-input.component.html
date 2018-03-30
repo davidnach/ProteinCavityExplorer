@@ -1,29 +1,36 @@
 <div class="container">
   <div class="row">
     <div class = "Absolute-Center Center-Container">
-    <div  class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form> (ngSubmit) = ""
-        <div class = "pid">
-          <div class="form-group">
-            <p><em>Begin a new experiment:</em></p>
-            <label for="pid">Enter a protein ID</label>
-            <input type="text" id="pid" class="form-control">
-          </div>
-          <button class="btn btn-default" type="button"
-          #pidbutton
-          (click)="checkpid(pidbutton)"=>submit</button>
-        </div>
+      <div  class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
 
-        <div class = "experimentId">
-          <div class="form-group">
-            <p><em>Or resume a prior experiment:</em></p>
-            <label for="Experiment id">Experiment ID</label>
-            <input type="text" id="experimentId" class="form-control">
+        <form (ngSubmit)="submitPid(f)" #f="ngForm">
+          <div class = "pid">
+            <div class="form-group">
+              <p><em>Begin a new experiment:</em></p>
+              <label for="pid">Enter a protein ID</label>
+              <input type="text"
+               id="pid" class="form-control" ngModel name="pid" pattern="^([1-9]{1})([a-zA-Z0-9]{3})$">
+               <span class="help-block" style="color:red" *ngIf="!f.valid && f.submitted ||f.submitted"
+               >Please use valid PID format (one digit followed by three alpha-numeric characters).</span>
+            </div>
+            <button class="btn btn-default" type="submit">Submit</button>
+
           </div>
-          <button class="btn btn-default" type="button">go</button>
-        </div>
-      </form>
+        </form>
+
+        <form (ngSubmit)="submitExperimentId(f2)" #f2="ngForm">
+          <div class = "experimentId">
+            <div class="form-group">
+              <p><em>Or resume a prior experiment:</em></p>
+              <label for="Experiment id">Experiment ID</label>
+              <input type="text" id="experimentId" class="form-control" ngModel name="experimentId" pattern="^([a-zA-Z0-9]{6})$">
+              <span class="help-block" style="color:red" *ngIf="!f2.valid && f2.submitted || f2.submitted"
+              >Try something else.</span>
+            </div>
+            <button class="btn btn-default" type="submit">go</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-  </div>
-  </div>
+</div>

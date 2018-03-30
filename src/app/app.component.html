@@ -1,7 +1,15 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <app-user-input></app-user-input>
-</div>
+<nav class = "navbar navbar-default">
+  <div class="container-fluid">
+      <div class="navbar-header">
+          <a class="navbar-brand" href="#">ProCavX</a>
+      </div>
+      <ul class="nav navbar-brand">
+          <li><a href="#">about</a></li>
+      </ul>
+    </div>
+  </nav>
+  <router-outlet
+  (pidEntered)= "submitPid($event)"
+  (experimentIdEntered) = "submitExperimentId($event)">
+</router-outlet>
