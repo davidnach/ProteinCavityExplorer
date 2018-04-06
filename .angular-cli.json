@@ -22,7 +22,9 @@
         "styles.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css"
       ],
-      "scripts": [],
+      "scripts": ["./assets/js/test.js",
+        "./assets/js/bio-pv.min.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

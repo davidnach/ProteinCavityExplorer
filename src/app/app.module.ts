@@ -12,9 +12,7 @@ import { UserInputComponent } from './user-input/user-input.component';
 import { ExperimentResultsComponent} from './experiment-results/experiment-results.component';
 
 const appRoutes: Routes = [
-
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'home',component: UserInputComponent},
+  {path: '',component: UserInputComponent},
   {path: 'experiment', component: ExperimentResultsComponent}
 ];
 
