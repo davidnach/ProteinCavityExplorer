@@ -1,6 +1,7 @@
 # AngularProcavx
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
+clone and do a "npm install" and then you can launch the app
 
 all the angular code that we write is in src/app
 
