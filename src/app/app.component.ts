@@ -8,11 +8,13 @@ import {UserInputService} from './userinput.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private ServerService: ServerService,
+
+  constructor(private serverService: ServerService,
   private router: Router,private userInputService: UserInputService ){
     this.userInputService.pidEntered.subscribe(
-      (status : string) => this.router.navigate(['experiment']));
-  }
+       (pid : string) => this.submitPidToServer(pid));
+   }
+
   title = 'Protein Cavity Explorer';
   experiments = [
     {
@@ -22,15 +24,15 @@ export class AppComponent {
 
 
   onSubmit(){
-    this.ServerService.createExperiment({pid: 'lake'})
+    this.serverService.createExperiment({pid: 'lake'})
     .subscribe((response) => {
       console.log(response);
       console.log(response['pid'])},
     (error) => {console.log(error)});
   }
 
-  submitPid(pid : string){
-    console.log(pid);
+  submitPidToServer(pid : string){
+    console.log("submitPidToServer " + pid);
     this.router.navigate(['experiment']);
   }
 

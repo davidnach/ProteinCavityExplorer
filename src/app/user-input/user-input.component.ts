@@ -10,8 +10,6 @@ import {ServerService} from '../server.service';
   styleUrls: ['./user-input.component.css']
 })
 export class UserInputComponent implements OnInit {
-  @Output() pidEntered = new EventEmitter<string>();
- @Output() experimentIdEntered = new EventEmitter<string>();
 
   constructor(private userInputService : UserInputService,
   private http: HttpClient, private serverService : ServerService) { }
@@ -21,15 +19,20 @@ export class UserInputComponent implements OnInit {
 
   submitPid(form : NgForm){
     console.log('user entered ' + form.value.pid + 'from user component');
-      if(form.valid){
-        this.serverService.checkIfPidExists("1ake").subscribe(
-          (error : HttpErrorResponse) => {console.log(error.status);
-          console.log("something");})
-        }
+    if(form.valid){
+      this.userInputService.pidEntered.emit(form.value.pid);
+      this.userInputService.setPid(form.value.pid);
+    }
+      //need make sure pid exists
+      // if(form.valid){
+      //   this.serverService.checkIfPidExists("1ake").subscribe(
+      //     (error : HttpErrorResponse) => {console.log(error.status);
+      //     console.log("something");})
+      //   }
     }
 
 
   submitExperimentId(form : NgForm){
-      //if(form.valid) this.experimentIdEntered.emit(form.value.experimentId);
+      //if(form.valid) this.userInputService.experimentIdEntered.emit(form.value.experimentId);
   }
 }
