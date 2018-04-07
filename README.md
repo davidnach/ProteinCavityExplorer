@@ -2,9 +2,17 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 
+all the angular code that we write is in src/app
+
+the server code is in server.js and the server folder
+
+-server.js has the same role as before except now its not rendering views ,just serving as an endpoint for requests made from the the front end.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+-if you enter "npm start" server.js will launch the angular app and will listen on `http://localhost:3000/
 
 ## Code scaffolding
 
