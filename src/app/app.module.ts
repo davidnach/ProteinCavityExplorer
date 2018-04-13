@@ -4,29 +4,37 @@ import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {ServerService} from './server.service';
 import {UserInputService} from './userinput.service';
-import {Routes, RouterModule} from "@angular/router"
+import {Routes, RouterModule} from "@angular/router";
 
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 import { AppComponent } from './app.component';
 import { UserInputComponent } from './user-input/user-input.component';
 import { ExperimentResultsComponent} from './experiment-results/experiment-results.component';
+import { AboutComponent } from './about/about.component';
+import { LoadingModule } from 'ngx-loading';
+
 
 const appRoutes: Routes = [
   {path: '',component: UserInputComponent},
-  {path: 'experiment', component: ExperimentResultsComponent}
+  {path: 'experiment', component: ExperimentResultsComponent},
+  {path: 'about', component: AboutComponent}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     UserInputComponent,
-    ExperimentResultsComponent
+    ExperimentResultsComponent,
+    AboutComponent
   ],
   imports: [
+    Ng4LoadingSpinnerModule.forRoot() ,
+    LoadingModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes,{enableTracing:true})
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [ServerService,UserInputService],
   bootstrap: [AppComponent]
