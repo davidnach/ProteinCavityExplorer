@@ -1,0 +1,12 @@
+Author: Naomi Fox, fox@cs.umass.edu
+Author: Filip Jagodzinski, filip@cs.umass.edu
+Date: July 2010
+Project: rigDyn
+         Linkage Laboratory 
+         Department of Computer Science
+         UMass Amherst & Smith College
+=======================================================================
+
+Description: xmlParser provides functionality for parsing and
+extracting information from an XML file
+

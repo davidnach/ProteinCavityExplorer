@@ -1,0 +1,30 @@
+File : README
+Date : 29 November 2016
+Author : Filip Jagodzinski
+
+The directory contains several scripts along with several subdirectories with executables 
+needed to perform rigidity analysis and generate a graph for a 4-alphanumeric ID 
+corresponding to a protein that is fetched from the PDB.
+
+script : cleanPipeline.sh
+description : removes previously run files/programs
+command line arguments : none
+sample invocation : ./cleanPipeline.sh
+output : none
+
+script : invokePipeline_WT_allChains.sh
+description : analyzes the rigidity of a single PDB file and all its chains; the PDB file is fetched from the PDB
+command line arguments : 1 : a valid alphanumeric PDB ID
+sample invocation : ./invokePipeline_WT_allChains.sh 1HHP
+
+output : plain text files are output to several directories. The graph (nodes and edges) 
+of the PDB file are output to the following for the sample invocation 1HHP : 
+WT_RA/data/1HHP.all.ra.out/1HHP.all.processed.pdb/user/1HHP.all.processed.pdb_molFW.xml
+
+script : invokePipeline_WT.sh
+description : analyzes the rigidity of a single PDB file and all its chains that is fetched from the PDB
+command line arguments : 2 : a valid alphanumeric PDB ID, and the chain to retain; write "all" to retain all chains
+sample invocation : ./invokePipeline_WT_allChains.sh 1HHP A
+
+output : plain text files are output to several directories. Most rigidity and PDB data is output to the following:
+WT_RA/data/1HHP.A.ra.out/1HHP.A.processed.pdb/user
