@@ -1,0 +1,65 @@
+==============================================================================
+This document describes data and source code used as input for the following 
+publication:
+
+VASP-E: Specificity Annotation with a Volumetric Analysis of
+Electrostatic Isopotentials
+
+by Brian Y. Chen, 
+Dept. Computer Science and Engineering, Lehigh University
+
+Please direct any questions to <chen@cse.lehigh.edu>
+==============================================================================
+
+License:
+
+The source code provided here is free software: you can redistribute it and/or 
+modify it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at your 
+option) any later version.
+
+The source code provided is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
+or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+for more details.
+
+A copy of the GNU General Public License is available in each software 
+directory described below.  If you have not received this license, see 
+<http://www.gnu.org/licenses/>.  
+
+
+Compilation:
+
+The software below are provided in three folders: 
+
+./surfProcessing/
+./vasp/
+./scripts/
+
+To compile the code, change your working directory to one of these folders 
+and type "make".  The executable binary will be generated in the "debug" folder.
+Object files are generated in the "object" folder.  Source code is in the
+"source" folder.  The final directory contains perl and python scripts, which
+do not require compilation.
+
+
+File Format:
+
+In addition to PDB file formats, the software provided also operates on closed
+surfaces of triangles described by .SURF files.  The .SURF file format is very
+simple, and a concise description of the format is provided in here:
+
+SURFformat.txt
+
+
+
+To operate surfProcessing and vasp, please read the following files which
+explain how to use this code.
+
+./surfProcessing/README-surfProcessing.txt
+./vasp/README-vasp.txt
+./genCustomCRG/README-scripts.txt
+
+
+
+

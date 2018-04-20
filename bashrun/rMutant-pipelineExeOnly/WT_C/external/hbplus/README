@@ -1,0 +1,9 @@
+// Naomi Fox, Filip Jagodzinski
+// UMass Amherst
+// Department of Comuter Science
+// Linkage Laboratory
+// Directory: external/hbplus
+//
+// HBPlus calculates the location of hydrogen bonds for a PDB file; if
+// hydrogens are not included in the PDB file, HBPlus can also
+// calculate the location of the hydrogen.

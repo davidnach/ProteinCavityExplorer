@@ -1,0 +1,107 @@
+<curatePDBFileConfig>
+  <step1>
+    <input>
+      <pdb fileName="{PDBID}.pdb" />
+      <directory dirName="./{PDBID}.{CHAINID}.cur.in/" />
+    </input>
+    <process>
+      <retainAllLigands value="false" />
+      <retainAllWaters value="false" />
+      <retainAllChains value="false" />
+      <retainAllModels value="false" />
+      <desiredChain id="{CHAINID}"
+                    retainAllWaters="false"
+                    retainAllLigands="false"/>
+    </process>
+    <output>
+      <pdb fileName="{PDBID}.{CHAINID}.cleaned.pdb.knr" />
+      <directory dirName="./{PDBID}.{CHAINID}.cur.out/" />
+    </output>
+  </step1>
+
+  <step2>
+    <input>
+      <directory dirName="./{PDBID}.{CHAINID}.cur.out/" />
+      <pdb fileName="{PDBID}.{CHAINID}.cleaned.pdb.knr" />
+    </input>
+    <process>
+      <hAtomCalculation method="reduce"
+			source="../external/reduce/reduce_src/reduce" />
+    </process>
+    <output>
+      <directory dirName="./{PDBID}.{CHAINID}.cur.out/" />
+      <pdb fileName="{PDBID}.{CHAINID}.processed.pdb.knr" />
+    </output>
+  </step2>
+
+  <step3>
+    <input>
+      <directory dirName="./{PDBID}.{CHAINID}.cur.out/" />
+      <pdb fileName="{PDBID}.{CHAINID}.processed.pdb.knr" />
+    </input>
+    <process>
+      <retainSSBondLines value="false" />
+      <retainConectRecords value="false" />
+      <calculateSSBonds value="true" />
+      <retainLinks value="false" />
+      <hPhobeCalculation cutoffDistance="0.25"/>
+      <hBondCalculation method="hBPlus" 
+			source="../external/hbplus/hbplus" />
+    </process>
+    <output>
+      <directory dirName="./{PDBID}.{CHAINID}.cur.out/" />
+      <interactions singleCovBonds="{PDBID}.{CHAINID}.SingleCovBonds.bnd.knr" 
+		    rBonds="{PDBID}.{CHAINID}.RBonds.bnd.knr" 
+		    doubleCovBonds="{PDBID}.{CHAINID}.DoubleCovBonds.bnd.knr" 
+		    tripleCovBonds="{PDBID}.{CHAINID}.TripleCovBonds.bnd.knr" 
+		    hBonds="{PDBID}.{CHAINID}.HBonds.bnd.knr" 
+		    disulfideBonds="{PDBID}.{CHAINID}.DisulfideBonds.bnd.knr" 
+		    hPhobes="{PDBID}.{CHAINID}.HPhobes.bnd.knr"  
+		    saltBridges="{PDBID}.{CHAINID}.SaltBridges.bnd.knr" 
+		    conectRecords="{PDBID}.{CHAINID}.ConectRecords.bnd.knr" 
+		    linkRecords="{PDBID}.{CHAINID}.LinkRecords.bnd.knr"  />
+    </output>
+  </step3>
+
+  <step4>
+    <input>
+      <directory dirName="./{PDBID}.{CHAINID}.cur.out/" />
+      <interactions singleCovBonds="{PDBID}.{CHAINID}.SingleCovBonds.bnd.knr"  
+		    rBonds="{PDBID}.{CHAINID}.RBonds.bnd.knr" 
+		    doubleCovBonds="{PDBID}.{CHAINID}.DoubleCovBonds.bnd.knr" 
+		    tripleCovBonds="{PDBID}.{CHAINID}.TripleCovBonds.bnd.knr" 
+		    hBonds="{PDBID}.{CHAINID}.HBonds.bnd.knr" 
+		    disulfideBonds="{PDBID}.{CHAINID}.DisulfideBonds.bnd.knr"  
+		    hPhobes="{PDBID}.{CHAINID}.HPhobes.bnd.knr"  
+		    saltBridges="{PDBID}.{CHAINID}.SaltBridges.bnd.knr" 
+		    conectRecords="{PDBID}.{CHAINID}.ConectRecords.bnd.knr" 
+		    linkRecords="{PDBID}.{CHAINID}.LinkRecords.bnd.knr"  />
+    </input>
+    <process>
+      <energyCutoffs singleCovBonds="100" 
+		     rBonds="100" 
+		     hBonds="-1.0"
+		     doubleCovBonds="100" 
+		     tripleCovBonds="100"
+		     disulfideBonds="100" 
+		     hPhobes="100" 
+		     saltBridges="100"
+		     conectRecords="100"
+		     linkRecords="100" />
+    </process>
+    <output>
+      <directory dirName="./{PDBID}.{CHAINID}.cur.out/" />
+      <interactions singleCovBonds="{PDBID}.{CHAINID}.SingleCovBonds.Pruned.bnd.knr" 
+		    rBonds="{PDBID}.{CHAINID}.RBonds.Pruned.bnd.knr"  
+		    doubleCovBonds="{PDBID}.{CHAINID}.DoubleCovBonds.Pruned.bnd.knr" 
+		    tripleCovBonds="{PDBID}.{CHAINID}.TripleCovBonds.Pruned.bnd.knr" 
+		    hBonds="{PDBID}.{CHAINID}.HBonds.Pruned.bnd.knr" 
+		    disulfideBonds="{PDBID}.{CHAINID}.DisulfideBonds.Pruned.bnd.knr" 
+		    hPhobes="{PDBID}.{CHAINID}.HPhobes.Pruned.bnd.knr" 
+		    saltBridges="{PDBID}.{CHAINID}.SaltBridges.Pruned.bnd.knr" 
+		    conectRecords="{PDBID}.{CHAINID}.ConectRecords.Pruned.bnd.knr" 
+		    linkRecords="{PDBID}.{CHAINID}.LinkRecords.Pruned.bnd.knr" />
+    </output>
+  </step4>
+
+</curatePDBFileConfig>

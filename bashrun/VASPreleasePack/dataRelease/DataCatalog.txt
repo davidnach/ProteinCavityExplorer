@@ -1,0 +1,57 @@
+==============================================================================
+This document describes data used as input for the following publication:
+
+VASP-E: Specificity Annotation with a Volumetric Analysis of
+Electrostatic Isopotentials
+
+by Brian Y. Chen, 
+Dept. Computer Science and Engineering, Lehigh University
+
+Please direct any questions to <chen@cse.lehigh.edu>
+==============================================================================
+
+This data set contains the data necessary to reproduce work described in the 
+article "VASP-E: Specificity Annotation with a Volumetric Analysis of 
+Electrostatic Isopotentials".  The data provided as part of this release are 
+in the public domain, but as these data originate from the Protein Data Bank 
+(PDB), it is expected that the originators of these data, of the PDB, VASP, 
+and VASP-E be properly cited whenever their work is referred to.  
+
+The data set includes protonated PDB structures of the data used in the paper,
+so that those attempting to reproduce the work avoid issues with structures 
+protonated differently.  
+
+./protonatedStructures/
+./protonatedStructures/cysteineProteases
+./protonatedStructures/serineProteases
+./protonatedStructures/barnaseBarstar
+./protonatedStructures/rap1aRaf
+
+The data set also includes .SURF files describing the union of spheres used 
+to define the boundaries of ligand binding cavities.  These spheres are used 
+in the method described in "VASP: A Volumetric Analysis of Surface Properties 
+Yields Insights into Protein-Ligand Binding Specificity" for defining 
+cavities.  Each sphere is centered on the position of a ligand atom. Using 
+these spheres, in combination with .SURF files that represent
+the molecular surface and envelope surfaces, you can generate serine protease
+and cysteine protease binding cavities at arbitrary resolutions, following the
+method from the paper and the vasp software, available with the VASP-E paper.
+
+Use your favorite software for generating molecular surfaces to produce the 
+molecular and envelope surfaces.  A file format is described in SURFformat.txt.
+
+./cavitySpheres/
+
+Finally, the data set also includes .SURF files describing the spheres used to 
+represent the interface region within the two protein complexes used in the 
+dataset.  You can use these and the provided tools to reproduce the nullification
+analysis individual amino acids in protein-protein interactions.
+
+./interfaceSpheres/
+
+
+
+
+
+
+

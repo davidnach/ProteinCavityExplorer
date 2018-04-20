@@ -1,0 +1,30 @@
+<kinariMol-config>
+  <input>
+    <pdb path="{PDBID}.{CHAINID}.cur.out/{PDBID}.{CHAINID}.processed.pdb.knr" />
+    <bondfiles singleCovBonds="{PDBID}.{CHAINID}.cur.out/{PDBID}.{CHAINID}.SingleCovBonds.Pruned.bnd.knr" 
+	       doubleCovBonds="{PDBID}.{CHAINID}.cur.out/{PDBID}.{CHAINID}.DoubleCovBonds.Pruned.bnd.knr" 
+	       hBonds="{PDBID}.{CHAINID}.cur.out/{PDBID}.{CHAINID}.HBonds.Pruned.bnd.knr" 
+	       hPhobes="{PDBID}.{CHAINID}.cur.out/{PDBID}.{CHAINID}.HPhobes.Pruned.bnd.knr" 
+	       rBonds="{PDBID}.{CHAINID}.cur.out/{PDBID}.{CHAINID}.RBonds.Pruned.bnd.knr"/>
+  </input>
+  <modeling>
+    <modeler type="BARHEURISTIC" />
+  </modeling>
+  <analysis>
+    <dilutionAnalysis run="false" />
+    <generateMetricsBBH run="true" />
+    <generateMetricsMolFW run="true" />
+    <generateMetricsBBHPDB run="true" />
+  </analysis>
+  <output>
+    <outputDir path="{PDBID}.{CHAINID}.ra.out/" />
+    <mol-fr-xml output="true" /> 
+    <mol-fr-pdb output="true" /> 
+    <result-pdb output="true" /> 
+    <pre-peb-game-bbh output="true" /> 
+    <post-peb-game-bbh output="true" /> 
+    <pre-peb-game-assoc-graph output="true" /> 
+    <post-peb-game-assoc-graph output="true" /> 
+    <rigid-cluster-decomposition output="true" /> 
+  </output>
+</kinariMol-config>
