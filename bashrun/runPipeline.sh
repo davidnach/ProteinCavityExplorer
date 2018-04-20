@@ -32,6 +32,11 @@ cd  rMutant-pipelineExeOnly
 cd ..
 
 
+(echo 1;echo ${pdbID}.pdb;echo 1.4;echo 1;echo ; echo;) | ./surfrace5_0_linux_64bit >> /dev/null
+if [ "$?" -eq "139" ]; then echo "seg fault!" ; fi
+
+
+
 
 
 
