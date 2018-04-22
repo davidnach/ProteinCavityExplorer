@@ -11,10 +11,13 @@ export class ServerService{
 
 
     createExperiment(pid : {pid :string}){
-      return this.http.post('http://localhost:3000/api/createExperiment', pid);
+      return this.http.post('/api/createExperiment', pid);
+    }
+
+   
+    retrieveExperiment(experimentId : {expId : string}){
+    	return this.http.post('/api/retrieveExperiment',experimentId);
     }
 
     
-
-
 }

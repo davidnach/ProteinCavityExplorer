@@ -4,6 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {ServerService} from './server.service';
 import {UserInputService} from './userinput.service';
+import {GlobalData} from './globaldata.service';
 import {Routes, RouterModule} from "@angular/router";
 
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
@@ -36,7 +37,7 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [ServerService,UserInputService],
+  providers: [ServerService,UserInputService,GlobalData],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

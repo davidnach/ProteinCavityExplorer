@@ -3,6 +3,7 @@ import {NgForm} from '@angular/forms';
 import { HttpClient , HttpErrorResponse} from '@angular/common/http';
 import {UserInputService} from '../userinput.service';
 import {ServerService} from '../server.service';
+import {GlobalData} from '../globaldata.service';
 
 @Component({
   selector: 'app-user-input',
@@ -12,7 +13,8 @@ import {ServerService} from '../server.service';
 export class UserInputComponent implements OnInit {
 
   constructor(private userInputService : UserInputService,
-  private http: HttpClient, private serverService : ServerService) { }
+  private http: HttpClient, private serverService : ServerService,
+private globalData : GlobalData) { }
 
   ngOnInit() {
   }
@@ -21,7 +23,7 @@ export class UserInputComponent implements OnInit {
     console.log('user entered ' + form.value.pid + 'from user component');
     if(form.valid){
       this.userInputService.pidEntered.emit(form.value.pid);
-      this.userInputService.setPid(form.value.pid);
+      this.globalData.setPid(form.value.pid);
     }
       //need make sure pid exists
       // if(form.valid){
@@ -33,6 +35,7 @@ export class UserInputComponent implements OnInit {
 
 
   submitExperimentId(form : NgForm){
-      //if(form.valid) this.userInputService.experimentIdEntered.emit(form.value.experimentId);
+      if(form.valid) this.userInputService.experimentIdEntered.emit(form.value.experimentId);
+      this.globalData.setExperimentId(form.value.experimentId);
   }
 }

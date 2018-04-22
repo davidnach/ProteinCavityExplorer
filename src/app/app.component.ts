@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import {Router} from '@angular/router';
 import {ServerService} from './server.service';
 import {UserInputService} from './userinput.service';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-
+import {GlobalData} from './globaldata.service';
 
 @Component({
   selector: 'app-root',
@@ -11,27 +10,20 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  //loading =false;
   constructor(private serverService: ServerService,
   private router: Router,private userInputService: UserInputService,
-private spinnerService: Ng4LoadingSpinnerService ){
+private globaldata : GlobalData ){
 
-    //this.spinnerService.show();
     this.userInputService.pidEntered.subscribe(
        (pid : string) => {
-         this.spinnerService.show();
          this.submitPidToServer(pid);
           });
+
+   this.userInputService.experimentIdEntered.subscribe(
+	(expId : string) => {
+	  this.submitExperimentId(expId);
+	});
    }
-
-
-  title = 'Protein Cavity Explorer';
-  experiments = [
-    {
-    pid: '32',
-    name: 'david'}
-  ];
-
 
   onSubmit(){
     this.serverService.createExperiment({pid: 'lake'})
@@ -42,23 +34,21 @@ private spinnerService: Ng4LoadingSpinnerService ){
   }
 
   submitPidToServer(pid : string){
-    this.spinnerService.show();
-    console.log("submitPidToServer " + pid);
     this.serverService.createExperiment({pid: 'lake'})
     .subscribe((response) => {
-      this.spinnerService.hide();
-      console.log(response);
-      console.log(response['pid'])},
+      console.log(response['expId']);
+      this.globaldata.setExperimentId(response['expId']);
+	this.router.navigate(['experiment']);},
     (error) => {console.log(error)});
-
-this.spinnerService.hide();
-    this.router.navigate(['experiment']);
   }
 
-
   submitExperimentId(experimentId : string){
-    console.log(experimentId);
-
+    this.serverService.retrieveExperiment({expId : '11111'})
+    .subscribe((response) => {
+     console.log(response);
+     this.globaldata.setExperimentId(response['expId']);},
+    (error) => {console.log(error)});
+    this.router.navigate(['experiment']);
   }
 
 
