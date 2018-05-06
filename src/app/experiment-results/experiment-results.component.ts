@@ -21,7 +21,7 @@ private globaldata : GlobalData) {
 
 
   ngOnInit() {
-	  this.experimentId = this.globaldata.getExperimentId();
+	 // this.experimentId = this.globaldata.getExperimentId();
           this.pid = this.globaldata.getPid();
           console.log(this.pid)
           var options = {
@@ -31,6 +31,7 @@ private globaldata : GlobalData) {
           quality : 'high'
         };
 	  var parent = document.getElementById('viewer');
+	  var color = pv.color;
           var viewer = pv.Viewer(parent, options);
           var url = "http://www.rcsb.org/pdb/files/";
           url = url + this.pid + ".pdb";
@@ -40,6 +41,57 @@ private globaldata : GlobalData) {
             viewer.centerOn(structure);
 
 	 });
-	 }
 
+function setColorForAtom(go, atoms, color) {
+    var view = go.structure().createEmptyView();
+    var i;
+    for(i = 0; i < atoms.length; i++){
+	view.addAtom(atoms[i]);
+    }
+    go.colorBy(pv.color.uniform(color), view);
 }
+
+// variable to store the previously picked atom. Required for resetting the color
+// whenever the mouse moves.
+var prevPicked = null;
+// add mouse move event listener to the div element containing the viewer. Whenever
+// the mouse moves, use viewer.pick() to get the current atom under the cursor.
+parent.addEventListener('click', function(event) {
+     	console.log('inside');
+	 viewer.forEach(function(go) {
+    go.colorBy(color.uniform('red'), go.select({rindices : [1,2,3,4,5,6,]}));
+     });
+  viewer.requestRedraw();
+   /* var rect = viewer.boundingClientRect();
+    var picked = viewer.pick({ x : event.clientX - rect.left,
+                               y : event.clientY - rect.top });
+    if (prevPicked !== null && picked !== null &&
+        picked.target() === prevPicked.atom) {
+      return;
+    }
+    if (prevPicked !== null) {
+      // reset color of previously picked atom.
+      setColorForAtom(prevPicked.node, prevPicked.atom, prevPicked.color);
+    }
+    if (picked !== null) {
+      console.log(viewer);
+      var atom = picked.target();
+      var atoms = atom.residue()._r;
+      console.log(atoms);
+      document.getElementById('picked-atom-name').innerHTML = atom.qualifiedName();
+      // get RGBA color and store in the color array, so we know what it was
+      // before changing it to the highlight color.
+      var color = [0,0,0,0];
+      picked.node().getColorForAtom(atom, color);
+      prevPicked = { atom : atom, color : color, node : picked.node() };
+
+      setColorForAtom(picked.node(), atoms, 'red');
+    } else {
+      document.getElementById('picked-atom-name').innerHTML = '&nbsp;';
+      prevPicked = null;
+    }
+    viewer.requestRedraw();*/
+});
+
+
+}}

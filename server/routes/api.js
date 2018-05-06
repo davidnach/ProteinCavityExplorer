@@ -1,23 +1,32 @@
 const express = require('express');
 const router = express.Router();
+const csvToJson = require('csvjson');
+const fs = require('fs');
+const path = require('path');
 var spawn = require("child_process").spawn;
-
+const shell = require('shelljs');
 
 
 
 
 router.post('/createExperiment',  (req,res) => {   
-    console.log(req.body);
+    console.log('server printing pid' + req.body.pid);
     var pid = req.body.pid;
     var expID = "";
     var pythonProcess = spawn('python',["pidDirectory.py", pid]);
     pythonProcess.stdout.on('data', function (data){
         // do something with experiment ID (data)
          expID += data;
-	 console.log(expID);
-         var info = {expId : expID };
-         console.log(info);
-         res.send(JSON.stringify(info));
+	//shell.exec('../../bashrun/runrmutantandvasp.sh ' + pid + ' ' + expID,{shell: '/bin/bash'});
+	 console.log('in server');
+         var expId = {expId : expID };
+	 var data = fs.readFileSync(path.join('.','1a00A.csv'), {encoding : 'utf8'});
+	 var options = {delimiter : " "};
+	 var pockets = csvToJson.toObject(data,options);
+	 console.log(pockets);
+	 var proteinInfo = {expId, pockets};
+	 console.log(proteinInfo);
+         res.send(JSON.stringify(proteinInfo));
     });
 });
 

@@ -34,12 +34,18 @@ private globaldata : GlobalData ){
   }
 
   submitPidToServer(pid : string){
-    this.serverService.createExperiment({pid: 'lake'})
+   
+    this.serverService.createExperiment({pid: pid})
     .subscribe((response) => {
+      console.log(response);
       console.log(response['expId']);
+      console.log(response['pockets']);
       this.globaldata.setExperimentId(response['expId']);
 	this.router.navigate(['experiment']);},
     (error) => {console.log(error)});
+  
+   this.router.navigate(['experiment']);
+
   }
 
   submitExperimentId(experimentId : string){
