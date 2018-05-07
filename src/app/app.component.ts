@@ -25,14 +25,6 @@ private globaldata : GlobalData ){
 	});
    }
 
-  onSubmit(){
-    this.serverService.createExperiment({pid: 'lake'})
-    .subscribe((response) => {
-      console.log(response);
-      console.log(response['pid'])},
-    (error) => {console.log(error)});
-  }
-
   submitPidToServer(pid : string){
    
     this.serverService.createExperiment({pid: pid})
@@ -41,6 +33,7 @@ private globaldata : GlobalData ){
       console.log(response['expId']);
       console.log(response['pockets']);
       this.globaldata.setExperimentId(response['expId']);
+      this.globaldata.setPockets(response['pockets']);	
 	this.router.navigate(['experiment']);},
     (error) => {console.log(error)});
   
@@ -56,7 +49,5 @@ private globaldata : GlobalData ){
     (error) => {console.log(error)});
     this.router.navigate(['experiment']);
   }
-
-
 
 }

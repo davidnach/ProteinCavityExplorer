@@ -20,12 +20,21 @@ router.post('/createExperiment',  (req,res) => {
 	//shell.exec('../../bashrun/runrmutantandvasp.sh ' + pid + ' ' + expID,{shell: '/bin/bash'});
 	 console.log('in server');
          var expId = {expId : expID };
-	 var data = fs.readFileSync(path.join('.','1a00A.csv'), {encoding : 'utf8'});
-	 var options = {delimiter : " "};
-	 var pockets = csvToJson.toObject(data,options);
-	 console.log(pockets);
-	 var proteinInfo = {expId, pockets};
-	 console.log(proteinInfo);
+	 var data;
+	 var pockets;
+	 var proteinInfo 
+	 try {
+	 	data = fs.readFileSync(path.join('/home/completePocketsNRSet',pid + 'A' + '.csv'), {encoding : 'utf8'});
+		var options = {
+                delimiter : " ",
+                wrap : true,
+                headers :"pocket area residues"};
+		pockets = csvToJson.toObject(data,options);
+		proteinInfo = {expId, pockets};
+	} catch (err) {
+		proteinInfo = expId;
+	}
+	
          res.send(JSON.stringify(proteinInfo));
     });
 });

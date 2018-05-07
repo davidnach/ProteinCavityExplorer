@@ -10,38 +10,60 @@ import { GlobalData} from '../globaldata.service';
   templateUrl: './experiment-results.component.html',
   styleUrls: ['./experiment-results.component.css']
 })
-export class ExperimentResultsComponent implements OnInit {
+export class ExperimentResultsComponent   {
     pid : string;
     experimentId : string;
+    color;
+    viewer;
+    parent;
     
   constructor(private userInputService : UserInputService,
 private globaldata : GlobalData) {
+	console.log('constructor');	
 
   }
 
 
   ngOnInit() {
-	 // this.experimentId = this.globaldata.getExperimentId();
+	  this.experimentId = this.globaldata.getExperimentId();
           this.pid = this.globaldata.getPid();
           console.log(this.pid)
-          var options = {
+	  this.parent = document.getElementById('viewer');
+	  this.color = pv.color;
+	  console.log(this.parent);
+  }
+ ngAfterContentInit() {
+	var options = {
           width: 600,
           height: 600,
           antialias: true,
           quality : 'high'
-        };
-	  var parent = document.getElementById('viewer');
-	  var color = pv.color;
-          var viewer = pv.Viewer(parent, options);
+         };
+      	
+        console.log(this.parent); 
+ 	this.viewer = pv.Viewer(this.parent, options);
+	var viewer_ = this.viewer;
+ 	  this.color = pv.color;
+	  console.log(this.viewer);
           var url = "http://www.rcsb.org/pdb/files/";
           url = url + this.pid + ".pdb";
           pv.io.fetchPdb(url, function(structure) {
-            viewer.cartoon('protein', structure);
-            viewer.autoZoom();
-            viewer.centerOn(structure);
+           viewer_.cartoon('protein', structure);
+            viewer_.autoZoom();
+            viewer_.centerOn(structure);
 
 	 });
+}
 
+
+colorPocketResidues(pocketNum : number){
+var color_ = this.color;
+this.viewer.forEach(function(go) {
+    go.colorBy(color_.uniform('red'), go.select({rindices : [1,2,3,4,5,6]}));
+     });
+    this.viewer.requestRedraw();	
+}
+/*
 function setColorForAtom(go, atoms, color) {
     var view = go.structure().createEmptyView();
     var i;
@@ -56,14 +78,14 @@ function setColorForAtom(go, atoms, color) {
 var prevPicked = null;
 // add mouse move event listener to the div element containing the viewer. Whenever
 // the mouse moves, use viewer.pick() to get the current atom under the cursor.
-parent.addEventListener('click', function(event) {
+this.parent.addEventListener('click', function(event) {
      	console.log('inside');
-	 viewer.forEach(function(go) {
-    go.colorBy(color.uniform('red'), go.select({rindices : [1,2,3,4,5,6,]}));
+	 this.viewer.forEach(function(go) {
+    go.colorBy(this.color.uniform('red'), go.select({rindices : [1,2,3,4,5,6,]}));
      });
-  viewer.requestRedraw();
-   /* var rect = viewer.boundingClientRect();
-    var picked = viewer.pick({ x : event.clientX - rect.left,
+  this.viewer.requestRedraw();
+    var rect = this.viewer.boundingClientRect();
+    var picked = this.viewer.pick({ x : event.clientX - rect.left,
                                y : event.clientY - rect.top });
     if (prevPicked !== null && picked !== null &&
         picked.target() === prevPicked.atom) {
@@ -74,7 +96,6 @@ parent.addEventListener('click', function(event) {
       setColorForAtom(prevPicked.node, prevPicked.atom, prevPicked.color);
     }
     if (picked !== null) {
-      console.log(viewer);
       var atom = picked.target();
       var atoms = atom.residue()._r;
       console.log(atoms);
@@ -90,8 +111,8 @@ parent.addEventListener('click', function(event) {
       document.getElementById('picked-atom-name').innerHTML = '&nbsp;';
       prevPicked = null;
     }
-    viewer.requestRedraw();*/
-});
+    this.viewer.requestRedraw();
+});*/
 
 
-}}
+}
