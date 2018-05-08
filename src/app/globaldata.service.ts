@@ -2,11 +2,11 @@ export class GlobalData{
 
 
 	pid : string;
-        experimentId : string;
+  experimentId : string;
 	pocketToResidues;
-		
+
 	constructor(){
-		this.pocketToResidues = new Map<number,number[]>();	
+		this.pocketToResidues = new Map<number,number[]>();
 	}
 
 
@@ -27,10 +27,14 @@ export class GlobalData{
 
 	}
 
+	getMap(){
+		return this.pocketToResidues;
+	}
+
 	getPocketResidues(pocketNum : number){
 		return this.pocketToResidues[pocketNum];
 	}
-	
+
 	setPockets(pockets){
 		var residuesString;
 		var residues = [];
@@ -47,10 +51,3 @@ export class GlobalData{
 		}
 	}
 }
-
-
-
-
-
-
-

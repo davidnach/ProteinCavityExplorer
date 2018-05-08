@@ -16,18 +16,22 @@ export class ExperimentResultsComponent   {
     color;
     viewer;
     parent;
-    
+    pocketNums;
+    pocketNumber:number;
+
+
   constructor(private userInputService : UserInputService,
 private globaldata : GlobalData) {
-	console.log('constructor');	
+	//this.pocketNums = Array.from(this.globaldata.getMap()).keys());
+  this.pocketNums = [1,2,3,4];
 
   }
 
 
   ngOnInit() {
 	  this.experimentId = this.globaldata.getExperimentId();
-          this.pid = this.globaldata.getPid();
-          console.log(this.pid)
+    this.pid = this.globaldata.getPid();
+    console.log(this.pid)
 	  this.parent = document.getElementById('viewer');
 	  this.color = pv.color;
 	  console.log(this.parent);
@@ -39,8 +43,8 @@ private globaldata : GlobalData) {
           antialias: true,
           quality : 'high'
          };
-      	
-        console.log(this.parent); 
+
+        console.log(this.parent);
  	this.viewer = pv.Viewer(this.parent, options);
 	var viewer_ = this.viewer;
  	  this.color = pv.color;
@@ -55,13 +59,17 @@ private globaldata : GlobalData) {
 	 });
 }
 
+tofetchindex(){
+  console.log(this.pocketNumber);
+}
 
 colorPocketResidues(pocketNum : number){
+console.log(pocketNum);
 var color_ = this.color;
 this.viewer.forEach(function(go) {
     go.colorBy(color_.uniform('red'), go.select({rindices : [1,2,3,4,5,6]}));
      });
-    this.viewer.requestRedraw();	
+    this.viewer.requestRedraw();
 }
 /*
 function setColorForAtom(go, atoms, color) {

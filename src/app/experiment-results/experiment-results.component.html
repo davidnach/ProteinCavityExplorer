@@ -1,5 +1,10 @@
 
 <p> Experiment ID : {{experimentId}}</p>
+<h1>Selecting Number</h1>
+    <select type="number" [(ngModel)]="pocketNumber" (ngModelChange)="colorPocketResidues(pocketNumber)">
+      <option *ngFor="let pocket of pocketNums" [ngValue]="pocket">{{pocket}}</option>
+    </select>
 <div id='picked-atom-name' style='text-align:center;'>&nbsp;</div>
 <div id="viewer" ></div>
+
 <button (click)="colorPocketResidues(1)">Click me!</button>
