@@ -30,9 +30,11 @@ router.post('/createExperiment',  (req,res) => {
                 wrap : true,
                 headers :"pocket area residues"};
 		pockets = csvToJson.toObject(data,options);
+		console.log(pockets);
 		proteinInfo = {expId, pockets};
 	} catch (err) {
 		proteinInfo = expId;
+		console.log('surf report doesnt exist');
 	}
 	
          res.send(JSON.stringify(proteinInfo));

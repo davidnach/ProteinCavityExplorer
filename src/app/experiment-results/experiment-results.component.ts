@@ -22,15 +22,22 @@ export class ExperimentResultsComponent   {
 
   constructor(private userInputService : UserInputService,
 private globaldata : GlobalData) {
-	//this.pocketNums = Array.from(this.globaldata.getMap()).keys());
-  this.pocketNums = [1,2,3,4];
-
+  //this.pocketNums = [1,2,3,4];
+  console.log(this.globaldata.getExperimentId());
+  console.log(Array.from((this.globaldata.getMap()).keys()));
   }
 
 
   ngOnInit() {
-	  this.experimentId = this.globaldata.getExperimentId();
+
+    console.log(this.pocketNums);		
+    this.experimentId = this.globaldata.getExperimentId();
+    console.log(this.experimentId);
+    console.log(Array.from((this.globaldata.getMap()).keys()));
     this.pid = this.globaldata.getPid();
+    this.pocketNums =this.globaldata.getPocketNums();
+    this.pocketNums = Array.from(this.pocketNums);
+    console.log(this.pocketNums);
     console.log(this.pid)
 	  this.parent = document.getElementById('viewer');
 	  this.color = pv.color;
@@ -57,6 +64,9 @@ private globaldata : GlobalData) {
             viewer_.centerOn(structure);
 
 	 });
+
+
+
 }
 
 tofetchindex(){
@@ -67,7 +77,7 @@ colorPocketResidues(pocketNum : number){
 console.log(pocketNum);
 var color_ = this.color;
 this.viewer.forEach(function(go) {
-    go.colorBy(color_.uniform('red'), go.select({rindices : [1,2,3,4,5,6]}));
+    go.colorBy(color_.uniform('red'), go.select({rindices : [pocketNum]}));
      });
     this.viewer.requestRedraw();
 }

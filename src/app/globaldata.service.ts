@@ -26,6 +26,13 @@ export class GlobalData{
 		return this.experimentId;
 
 	}
+	
+	getPocketNums(){
+		console.log(this.pocketToResidues);
+		console.log(this.pocketToResidues.valueOf(1));
+		console.log(Array.from(this.pocketToResidues.keys()));
+	       return this.pocketToResidues.keys();
+	}
 
 	getMap(){
 		return this.pocketToResidues;
@@ -41,7 +48,6 @@ export class GlobalData{
 		var i;
 		var j;
 		for(i = 0; i < pockets.length; i++){
-			console.log(pockets[i].residues);
 			residuesString = pockets[i].residues.split(',');
 			for (j = 0; j < residuesString.length; j++){
 				residues.push(Number(residuesString[j]));
@@ -49,5 +55,6 @@ export class GlobalData{
 			this.pocketToResidues.set(i,residues);
 			residues = [];
 		}
+		console.log(this.pocketToResidues);
 	}
 }
