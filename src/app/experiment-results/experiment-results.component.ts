@@ -13,6 +13,7 @@ import { GlobalData} from '../globaldata.service';
 export class ExperimentResultsComponent   {
     pid : string;
     experimentId : string;
+    showSpinner: boolean = true;
     color;
     viewer;
     parent;
@@ -22,14 +23,15 @@ export class ExperimentResultsComponent   {
 
   constructor(private userInputService : UserInputService,
 private globaldata : GlobalData) {
-	//this.pocketNums = Array.from(this.globaldata.getMap()).keys());
-  this.pocketNums = [1,2,3,4];
+	this.pocketNums = Array.from(this.globaldata.getMap().keys());
+  console.log(this.pocketNums);
 
   }
 
 
   ngOnInit() {
 	  this.experimentId = this.globaldata.getExperimentId();
+    console.log(this.experimentId);
     this.pid = this.globaldata.getPid();
     console.log(this.pid)
 	  this.parent = document.getElementById('viewer');
@@ -60,14 +62,15 @@ private globaldata : GlobalData) {
 }
 
 tofetchindex(){
-  console.log(this.pocketNumber);
+  this.colorPocketResidues(this.pocketNumber)
 }
 
 colorPocketResidues(pocketNum : number){
 console.log(pocketNum);
+var residues = this.globaldata.getPocketResidues(pocketNum);
 var color_ = this.color;
 this.viewer.forEach(function(go) {
-    go.colorBy(color_.uniform('red'), go.select({rindices : [1,2,3,4,5,6]}));
+    go.colorBy(color_.uniform('red'), go.select({rindices : residues}));
      });
     this.viewer.requestRedraw();
 }
