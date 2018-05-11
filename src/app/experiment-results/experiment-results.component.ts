@@ -1,6 +1,6 @@
 
 declare var pv:any;
-
+declare var structure:any;
 import {UserInputService} from '../userinput.service';
 import { Component, OnInit, } from '@angular/core';
 import { GlobalData} from '../globaldata.service';
@@ -13,6 +13,7 @@ import { GlobalData} from '../globaldata.service';
 export class ExperimentResultsComponent   {
     pid : string;
     experimentId : string;
+    showSpinner: boolean = true;
     color;
     viewer;
     parent;
@@ -21,29 +22,23 @@ export class ExperimentResultsComponent   {
 
 
   constructor(private userInputService : UserInputService,
-private globaldata : GlobalData) {
-  //this.pocketNums = [1,2,3,4];
-  console.log(this.globaldata.getExperimentId());
-  console.log(Array.from((this.globaldata.getMap()).keys()));
+	      private globaldata : GlobalData) {
+ 	this.pocketNums = Array.from(this.globaldata.getMap().keys());
+	this.experimentId = this.globaldata.getExperimentId();
+	console.log(this.pocketNums);
   }
 
 
   ngOnInit() {
-
-    console.log(this.pocketNums);		
-    this.experimentId = this.globaldata.getExperimentId();
     console.log(this.experimentId);
-    console.log(Array.from((this.globaldata.getMap()).keys()));
     this.pid = this.globaldata.getPid();
-    this.pocketNums =this.globaldata.getPocketNums();
-    this.pocketNums = Array.from(this.pocketNums);
-    console.log(this.pocketNums);
     console.log(this.pid)
 	  this.parent = document.getElementById('viewer');
 	  this.color = pv.color;
 	  console.log(this.parent);
   }
- ngAfterContentInit() {
+    
+  ngAfterContentInit() {
 	var options = {
           width: 600,
           height: 600,
@@ -52,6 +47,7 @@ private globaldata : GlobalData) {
          };
 
         console.log(this.parent);
+
  	this.viewer = pv.Viewer(this.parent, options);
 	var viewer_ = this.viewer;
  	  this.color = pv.color;
@@ -64,73 +60,23 @@ private globaldata : GlobalData) {
             viewer_.centerOn(structure);
 
 	 });
-
-
-
-}
-
-tofetchindex(){
-  console.log(this.pocketNumber);
 }
 
 colorPocketResidues(pocketNum : number){
-console.log(pocketNum);
-var color_ = this.color;
-this.viewer.forEach(function(go) {
-    go.colorBy(color_.uniform('red'), go.select({rindices : [pocketNum]}));
-     });
+    var sel = this.viewer.forEach(function(go) {
+	return go.select({rindices : residues})
+    });
+
+    console.log(sel);
+
+    //console.log(this.viewer.structure());
+    var residues = this.globaldata.getPocketResidues(pocketNum);
+    var color_ = this.color;
+    this.viewer.forEach(function(go) {
+	console.log(go);
+	go.colorBy(color_.uniform('red'), go.select({rindices : residues}));
+    });
     this.viewer.requestRedraw();
 }
-/*
-function setColorForAtom(go, atoms, color) {
-    var view = go.structure().createEmptyView();
-    var i;
-    for(i = 0; i < atoms.length; i++){
-	view.addAtom(atoms[i]);
-    }
-    go.colorBy(pv.color.uniform(color), view);
-}
-
-// variable to store the previously picked atom. Required for resetting the color
-// whenever the mouse moves.
-var prevPicked = null;
-// add mouse move event listener to the div element containing the viewer. Whenever
-// the mouse moves, use viewer.pick() to get the current atom under the cursor.
-this.parent.addEventListener('click', function(event) {
-     	console.log('inside');
-	 this.viewer.forEach(function(go) {
-    go.colorBy(this.color.uniform('red'), go.select({rindices : [1,2,3,4,5,6,]}));
-     });
-  this.viewer.requestRedraw();
-    var rect = this.viewer.boundingClientRect();
-    var picked = this.viewer.pick({ x : event.clientX - rect.left,
-                               y : event.clientY - rect.top });
-    if (prevPicked !== null && picked !== null &&
-        picked.target() === prevPicked.atom) {
-      return;
-    }
-    if (prevPicked !== null) {
-      // reset color of previously picked atom.
-      setColorForAtom(prevPicked.node, prevPicked.atom, prevPicked.color);
-    }
-    if (picked !== null) {
-      var atom = picked.target();
-      var atoms = atom.residue()._r;
-      console.log(atoms);
-      document.getElementById('picked-atom-name').innerHTML = atom.qualifiedName();
-      // get RGBA color and store in the color array, so we know what it was
-      // before changing it to the highlight color.
-      var color = [0,0,0,0];
-      picked.node().getColorForAtom(atom, color);
-      prevPicked = { atom : atom, color : color, node : picked.node() };
-
-      setColorForAtom(picked.node(), atoms, 'red');
-    } else {
-      document.getElementById('picked-atom-name').innerHTML = '&nbsp;';
-      prevPicked = null;
-    }
-    this.viewer.requestRedraw();
-});*/
-
 
 }
