@@ -62,14 +62,7 @@ export class ExperimentResultsComponent   {
 	 });
 }
 
-colorPocketResidues(pocketNum : number){
-    var sel = this.viewer.forEach(function(go) {
-	return go.select({rindices : residues})
-    });
-
-    console.log(sel);
-
-    //console.log(this.viewer.structure());
+ colorPocketResidues(pocketNum : number){
     var residues = this.globaldata.getPocketResidues(pocketNum);
     var color_ = this.color;
     this.viewer.forEach(function(go) {
