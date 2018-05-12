@@ -7,7 +7,8 @@ import {GlobalData} from './globaldata.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers :[GlobalData]
 })
 export class AppComponent {
   constructor(private serverService: ServerService,
@@ -29,15 +30,12 @@ private globaldata : GlobalData ){
    
     this.serverService.createExperiment({pid: pid})
     .subscribe((response) => {
-      console.log(response);
       console.log(response['expId']);
-      console.log(response['pockets']);
       this.globaldata.setExperimentId(response['expId']);
       this.globaldata.setPockets(response['pockets']);	
-	this.router.navigate(['experiment']);},
+      this.router.navigate(['experiment']);},
     (error) => {console.log(error)});
   
-   this.router.navigate(['experiment']);
 
   }
 
@@ -47,7 +45,6 @@ private globaldata : GlobalData ){
      console.log(response);
      this.globaldata.setExperimentId(response['expId']);},
     (error) => {console.log(error)});
-    this.router.navigate(['experiment']);
   }
 
 }
