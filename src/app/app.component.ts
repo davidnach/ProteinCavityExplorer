@@ -10,6 +10,7 @@ import {GlobalData} from './globaldata.service';
   styleUrls: ['./app.component.css'],
   providers :[GlobalData]
 })
+
 export class AppComponent {
   constructor(private serverService: ServerService,
   private router: Router,private userInputService: UserInputService,

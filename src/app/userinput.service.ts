@@ -15,7 +15,10 @@ export class UserInputService{
   constructor(private http:HttpClient){ }
 
   checkIfPidExists(pid: string){
-    return this.http.get('https://files.rcsb.org/view/1ake.pdb')
+  //getPidStatus(pid: string){
+    //return this.http.get('https://www.rcsb.org/pdb/rest/idStatus?structureId='+pid+'');
+      return this.http.get('https://files.rcsb.org/view/' + pid + '.pdb');
+      //return this.http.get('https://files.rcsb.org/view/1ake.pdb');
   }
 
   setPid(pid : string){
