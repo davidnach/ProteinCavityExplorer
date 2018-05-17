@@ -12,6 +12,7 @@
                id="pid" class="form-control" ngModel name="pid" pattern="^([1-9]{1})([a-zA-Z0-9]{3})$">
                <span class="help-block" style="color:red" *ngIf="!f.valid"
                >Please use valid PID format (one digit followed by three alpha-numeric characters).</span>
+ 	       <span class="pidExits" style="color:red" *ngIf="!pidExists && (!f.touched && submittedForm) "> not an RCSB recognized pid</span>
             </div>
             <button class="btn btn-default" type="submit">Submit</button>
 

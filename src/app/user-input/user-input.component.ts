@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef,EventEmitter,Output} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {NgForm,AbstractControl,ValidatorFn} from '@angular/forms';
 import { HttpClient , HttpErrorResponse} from '@angular/common/http';
 import {UserInputService} from '../userinput.service';
 import {ServerService} from '../server.service';
@@ -13,7 +13,9 @@ import 'rxjs/add/operator/map';
   styleUrls: ['./user-input.component.css']
 })
 export class UserInputComponent implements OnInit {
-
+  pidSet: Set<string>;
+  pidExists: boolean = false;
+  submittedForm: boolean = false;
   constructor(private userInputService : UserInputService,
 	      private http: HttpClient,
 	      private serverService : ServerService,
@@ -24,12 +26,18 @@ export class UserInputComponent implements OnInit {
       var opts = '/pdb/rest/getCurrent';
       let parseString = require('xml2js').parseString;
       var xml;
+      this.pidSet = new Set<string>();
       this.http.get(url+opts, {responseType:'text'})
 	  .map(response => {
 	      let data;
-	      parseString(response, function(err, result) {
+	      parseString(response, (err, result) => {
 		  console.dir(result); // print JSON object
-		  data = result
+		  var i;
+	          for(i = 0; i < result.current['PDB'].length; i++){
+			this.pidSet.add(result.current['PDB'][i]['$']['structureId']);
+		  }
+		  
+		  data = result;
 	      });
 	      return data;
 	  })
@@ -43,17 +51,26 @@ export class UserInputComponent implements OnInit {
     }
 
     submitPid(form : NgForm){
+	this.checkIfPidExists(form.value.pid);
+	this.submittedForm = true;
 	//form.value.pid = form.value.pid.toLowerCase();
 	console.log('user entered ' + form.value.pid + 'from user component');
-	if (form.valid){// && checkPidValidity(form.value.pid)) {
-	    this.userInputService.pidEntered.emit(form.value.pid);
+	if (form.valid && this.pidExists ){ 
+	    this.userInputService.pidEntered.emit(form.value.pid.toLowerCase());
 	    this.globalData.setPid(form.value.pid);
 	}
+	form.resetForm();
     }
     
     submitExperimentId(form : NgForm){
 	if(form.valid) this.userInputService.experimentIdEntered.emit(form.value.experimentId);
 	this.globalData.setExperimentId(form.value.experimentId);
     }
+
+    checkIfPidExists(pid){
+	console.log(pid.toUpperCase());
+	this.pidExists = this.pidSet.has(pid.toUpperCase());
+	console.log(this.pidExists);	
+    }	
 
 }
