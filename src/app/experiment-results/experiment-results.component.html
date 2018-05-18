@@ -1,9 +1,16 @@
 
+<div id="wrapper">
 <p> Experiment ID : {{experimentId.expId}}</p>
-<h1>Select Pocket</h1>
+<h2>Select Pocket</h2>
 <div>
   <select type="number" [(ngModel)]="pocketNumber" (ngModelChange)="colorPocketResidues(pocketNumber)">
       <option *ngFor="let pocket of pocketNums" [ngValue]="pocket">{{pocket}}</option>
   </select>
 </div>
-<div id="viewer" ></div>
+	<div id="viewcontainer">
+		<div id="viewer" ></div>
+		<div id="fileinfo">
+This is where the pdb or surf files or rmutant files info goes
+		</div>
+	</div>
+</div>

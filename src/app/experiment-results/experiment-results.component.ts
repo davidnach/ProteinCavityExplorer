@@ -4,6 +4,9 @@ declare var structure:any;
 import {UserInputService} from '../userinput.service';
 import { Component, OnInit, } from '@angular/core';
 import { GlobalData} from '../globaldata.service';
+import { HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { Inject }  from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-experiment-results',
@@ -24,7 +27,9 @@ export class ExperimentResultsComponent   {
 
 
   constructor(private userInputService : UserInputService,
-	      private globaldata : GlobalData) {
+	      private globaldata : GlobalData,
+	      private http: HttpClient,
+	      @Inject(DOCUMENT) document) {
   }
 
 
@@ -56,6 +61,9 @@ export class ExperimentResultsComponent   {
             this.viewer.centerOn(structure);
 
 	});
+      // print PDB into box
+      //var fileinfo = document.getElementById("fileinfo");
+      //fileinfo.innerHTML(this.http.get(url));
 	
 }
 
@@ -65,8 +73,10 @@ export class ExperimentResultsComponent   {
     this.structure = this.orig_structure;
     this.viewer.cartoon('protein',this.structure);
     var residues = this.globaldata.getPocketResidues(pocketNum);
+    var sel = this.structure.select({rindices: residues});
+    this.viewer.spheres('structure.sel', sel,{}); 
     this.viewer.forEach( (structure) => {
-	structure.colorBy(this.color.uniform('red'), structure.select({rindices : residues}));
+	structure.colorBy(this.color.uniform('red'), sel);
     });
     this.viewer.requestRedraw();
 }
