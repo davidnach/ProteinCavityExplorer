@@ -24,7 +24,7 @@
             <div class="form-group">
               <p><em>Or resume a prior experiment:</em></p>
               <label for="Experiment id">Experiment ID</label>
-              <input type="text" id="experimentId" class="form-control" ngModel name="experimentId" pattern="^([1-9]{1})([a-zA-Z0-9]{3})([a-zA-Z0-9]{16})$">
+              <input type="text" id="experimentId" class="form-control" ngModel name="experimentId" pattern="^([1-9]{1})([a-zA-Z0-9]{3})([a-fA-f0-9]{16})$">
               <span class="help-block" style="color:red" *ngIf="!f2.valid"
               >Try something else.</span>
             </div>
