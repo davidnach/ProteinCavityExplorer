@@ -41,7 +41,7 @@ private globaldata : GlobalData ){
   }
 
   submitExperimentId(experimentId : string){
-    this.serverService.retrieveExperiment({expId : '11111'})
+    this.serverService.retrieveExperiment({expId : experimentId})
     .subscribe((response) => {
      console.log(response);
      this.globaldata.setExperimentId(response['expId']);},

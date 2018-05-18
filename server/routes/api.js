@@ -16,10 +16,10 @@ router.post('/createExperiment',  (req,res) => {
     var pythonProcess = spawn('python',["pidDirectory.py", pid]);
     pythonProcess.stdout.on('data', function (data){
         // do something with experiment ID (data)
-         expID += data;
+         expID = pid + data;
 	//shell.exec('../../bashrun/runrmutantandvasp.sh ' + pid + ' ' + expID,{shell: '/bin/bash'});
 	 console.log('in server');
-         var expId = {expId : expID };
+        var expId = {expId : expID };
 	 var data;
 	 var pockets;
 	 var proteinInfo 
@@ -45,7 +45,7 @@ router.post('/createExperiment',  (req,res) => {
 
 router.post('/retrieveExperiment', (req,res) => {
  	console.log(req.body);
-	var info = {expId : 'experimentid recieved by server'};
+    var info = {expId : req.body.expId}
 	res.send(JSON.stringify(info));
  });	
 
