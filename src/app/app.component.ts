@@ -39,12 +39,21 @@ private globaldata : GlobalData ){
   
 
   }
-
+  
   submitExperimentId(experimentId : string){
-    this.serverService.retrieveExperiment({expId : '11111'})
+    this.serverService.retrieveExperiment({expId : experimentId})
     .subscribe((response) => {
-     console.log(response);
-     this.globaldata.setExperimentId(response['expId']);},
+    console.log(response);
+    if(response === 'No such experiment!') {
+
+    } else {
+      this.globaldata.setPid(response['pid']);
+      this.globaldata.setExperimentId(response['expId']);
+      this.globaldata.setPockets(response['pockets']);	
+      this.router.navigate(['experiment']);
+    }	
+
+    },	
     (error) => {console.log(error)});
   }
 
