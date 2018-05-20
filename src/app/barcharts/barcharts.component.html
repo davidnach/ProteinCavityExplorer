@@ -1,0 +1,16 @@
+<h1>
+  {{static}}
+</h1>
+<svg [attr.height]="height" [attr.width]="width">
+  <g [attr.transform]="transform">
+    <rect 
+      *ngFor="let item of data" 
+      [attr.height]="barHeights[i]" 
+      [attr.width]="barWidth" 
+      [attr.x]="xCoordinates[i]"  
+      [attr.y]="0" 
+      fill="skyblue">
+    </rect>
+  </g>
+</svg>
+

@@ -1,7 +1,7 @@
-#wrapper{
+/*#wrapper{
 overflow:auto;
 border-radius: 3px;
-}
+}*/
 #viewer{
 width:600px;
 height:600px;
@@ -9,10 +9,10 @@ overflow:auto;
 margin-left: auto;
 margin-right: auto;
 }
-#fileinfo{
+/*#fileinfo{
 width: 600px;
 height: 600px;
 overflow-y: scroll;
 margin-left:auto;
 margin-right: auto;
-}
+}*/
