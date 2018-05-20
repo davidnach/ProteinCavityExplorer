@@ -29,14 +29,15 @@ private globaldata : GlobalData ){
 
   submitPidToServer(pid : string){
    
-    this.serverService.createExperiment({pid: pid})
+/*    this.serverService.createExperiment({pid: pid})
     .subscribe((response) => {
       console.log(response['expId']);
       this.globaldata.setExperimentId(response['expId']);
       this.globaldata.setPockets(response['pockets']);	
       this.router.navigate(['experiment']);},
     (error) => {console.log(error)});
-  
+*/
+this.router.navigate(['experiment']); 
 
   }
   

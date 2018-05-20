@@ -28,9 +28,6 @@ export class GlobalData{
 	}
 	
 	getPocketNums(){
-		console.log(this.pocketToResidues);
-		console.log(this.pocketToResidues.valueOf(1));
-		console.log(Array.from(this.pocketToResidues.keys()));
 	       return this.pocketToResidues.keys();
 	}
 
@@ -39,7 +36,7 @@ export class GlobalData{
 	}
 
 	getPocketResidues(pocketNum : number){
-		return this.pocketToResidues[pocketNum];
+		return this.pocketToResidues.get(pocketNum);
 	}
 
 	setPockets(pockets){

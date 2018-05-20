@@ -14,6 +14,7 @@ import { UserInputComponent } from './user-input/user-input.component';
 import { ExperimentResultsComponent} from './experiment-results/experiment-results.component';
 import { AboutComponent } from './about/about.component';
 import { LoadingModule } from 'ngx-loading';
+import { BarchartsComponent } from './barcharts/barcharts.component';
 
 
 const appRoutes: Routes = [
@@ -27,7 +28,8 @@ const appRoutes: Routes = [
     AppComponent,
     UserInputComponent,
     ExperimentResultsComponent,
-    AboutComponent
+    AboutComponent,
+    BarchartsComponent
   ],
   imports: [
     Ng4LoadingSpinnerModule.forRoot() ,
