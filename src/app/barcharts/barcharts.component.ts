@@ -1,77 +1,83 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,ElementRef,ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 export type Datum = {name: string, value: number};
 @Component({
+  encapsulation: ViewEncapsulation.None,
   selector: 'barcharts',
   templateUrl: './barcharts.component.html',
   styleUrls: ['./barcharts.component.css']
 })
 export class BarchartsComponent implements OnInit {
-test: string;
-static = 'here';
-radius = 10;
-height = 300;
-width = 600;
-/*data: Datum[] =  ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    .map((month: string) => ({
-      name: month,
-      value: Math.random() * 100
-    }));*/
-range = 100;
-xScale: d3.ScaleBand<string> = null;
-  yScale: d3.ScaleLinear<number, number> = null;
-  transform = '';
-  chartWidth = this.width;
-  chartHeight = this.height;
-  barHeights: number[] = [];
-  barWidth = 0;
-  xCoordinates: number[] = [];
+  data = [
+              {salesperson: 'Bob',sales:33},
+              {salesperson: 'Robin',sales:12},
+              {salesperson: 'Anne',sales:41},
+              {salesperson: 'Mark',sales:16},
+              {salesperson: 'Joe',sales:39},
+              {salesperson: 'David',sales:40}
+          ];
 	@Input() residueTypeCount : Map<string,number>;
-  constructor() {
-	this.test = '3';
+  constructor(private element: ElementRef) {
+
 	 }
-	
-  ngOnInit(){
-	this.test = this.residueTypeCount.get('testing').toString();
-  }
-  ngOnChanges() { 
-	this.test =  this.residueTypeCount.get('testing').toString();
- 	console.log(this.residueTypeCount.get('testing'));
-	console.log(this.test);
-	this.chartHeight = this.height;
-    this.chartWidth = this.width;
-    /*this.xScale = d3.scaleBand()
-      .domain(this.data.map((item: Datum)=>item.name)).range([0, this.chartWidth])
-      .paddingInner(0.5);*/
-    this.yScale = d3.scaleLinear()
-      .domain([0, this.range])
-      .range([this.chartHeight, 0]);
+   ngOnInit(){
+     this.generateBarChart();
+   }
+   generateBarChart(){
+            // set the dimensions and margins of the graph
+            let margin = {top: 5, right: 20, bottom: 30, left: 40};
+            let width = 600 - margin.left - margin.right;
+            let height = 600 - margin.top - margin.bottom;
 
-    this.barWidth = this.xScale.bandwidth();
-    //this.barHeights = this.data.map((item: Datum) =>this.barHeight(item.value));
-    this.barHeights = [1,2,3];
-    //this.xCoordinates = this.data.map((item: Datum) => this.xScale(item.name));
-    this.xCoordinates = [1,2,3];
-    // use transform to flip the chart upside down, so the bars start from bottom
-    this.transform = `scale(1, -1) translate(0, ${- this.chartHeight})`;
-  }
-	
-  clampHeight(value: number) {
-    if (value < 0) {
-      return 0;
-    }
-    if (this.chartHeight <= 0) {
-      return 0
-    }
-    if (value > this.chartHeight) {
-      return this.chartHeight;
-    }
-    return value;
-  }
+            //create svg
 
-  barHeight(value) {
-    return this.clampHeight(this.chartHeight - this.yScale(value));
-  }
+            let svg = d3.select(this.element.nativeElement).append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom)
+            .style('background-color', '#efefef');
+
+            //plot area
+
+            let chart = svg.append("g")
+            .attr('class', 'bar')
+            .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+            let xDomain = this.data.map(d => d.salesperson);
+            let yDomain = [0, d3.max(this.data, d=> d.sales)];
+
+            // set the scale for data domain
+            let x = d3.scaleBand()
+                    .domain(xDomain)
+                    .rangeRound([0, width])
+                    .padding(0.2);
+
+            let y = d3.scaleLinear()
+                    .domain(yDomain)
+                    .range([height, 0]);
+
+                    // add the x Axis
+                    svg.append("g")
+                        .attr('class', 'x axis')
+                        .attr('transform', `translate(${margin.left}, ${margin.top + height})`)
+                        .call(d3.axisBottom(x));
+
+                    // add the y Axis
+                    svg.append("g")
+                        .attr('class', 'y axis')
+                        .attr('transform', `translate(${margin.left}, ${margin.top})`)
+                        .call(d3.axisLeft(y));
+
+                    // plot chart with data
+                    svg.selectAll("bar")
+                        .data(this.data)
+                        .enter().append("rect")
+                        .attr("class", "bar")
+                        .attr("x", function(d) { return margin.left + x(d.salesperson) ; })
+                        .attr("width", x.bandwidth)
+                        .attr("y", function(d) { return y(d.sales); })
+                        .attr("height", function(d) { return height - y(d.sales); });
+                }
+
 
 
 
