@@ -21,6 +21,7 @@ export class ExperimentResultsComponent   {
     experimentId : string;
     showSpinner: boolean = true;
     residueTypeCount: Map<string, number>;
+    tempResidueTypeCount: Map<string,number>;
     color;
     viewer;
     parent;
@@ -28,6 +29,8 @@ export class ExperimentResultsComponent   {
     orig_structure;
     pocketNums;
     pocketNumber:number;
+    pocketSelected : boolean = false;
+
 
    //d3 stuff
     radius = 10;
@@ -37,13 +40,13 @@ export class ExperimentResultsComponent   {
 	      private http: HttpClient,
 	      @Inject(DOCUMENT) document) {
 	this.residueTypeCount = new Map<string,number>();
-	this.residueTypeCount.set('testing',2);
-	console.log(this.residueTypeCount.get('testing'));
+        this.tempResidueTypeCount = new Map<string,number>();
+        this.initializeTempResidueTypeCount();
   }
 
 
   ngOnInit() {
-	/*this.pocketNums = Array.from(this.globaldata.getMap().keys());
+	this.pocketNums = Array.from(this.globaldata.getMap().keys());
 	this.experimentId = this.globaldata.getExperimentId();
 	console.log(this.experimentId);
 	this.pid = this.globaldata.getPid();
@@ -65,7 +68,7 @@ export class ExperimentResultsComponent   {
         url = url + this.pid + ".pdb";
         pv.io.fetchPdb(url, (structure) => {
 	    this.orig_structure = structure;
-            this.viewer.cartoon('protein', structure);
+            //this.viewer.cartoon('protein', structure);
             this.viewer.autoZoom();
             this.viewer.centerOn(structure);
 
@@ -73,42 +76,61 @@ export class ExperimentResultsComponent   {
       // print PDB into box
       //var fileinfo = document.getElementById("fileinfo");
       //fileinfo.innerHTML(this.http.get(url));
-	*/
+	
 }
-
-ngAfterContentInit(){
-	d3.select('p').style('color','red');
-}
-
-
 
 
  colorPocketResidues(pocketNum : number){
-    this.viewer.clear();
+     this.viewer.clear();
     this.structure = this.orig_structure;
-    this.viewer.cartoon('protein',this.structure);
+   // this.viewer.cartoon('protein',this.structure);
     var residues = this.globaldata.getPocketResidues(pocketNum);
     var sel = this.structure.select({rindices: residues});
+    this.fillResidueTypeCount(sel);
     this.viewer.spheres('structure.sel', sel,{}); 
     this.viewer.forEach( (structure) => {
 	structure.colorBy(this.color.uniform('red'), sel);
     });
-    this.viewer.requestRedraw();
+    //this.viewer.requestRedraw();
+    this.pocketSelected = true;
+    
 }
 
-colorMe() {
-	d3.select('button').style('color','red');
-}
-clicked(event: any) {
-    d3.select(event.target).append('circle')
-      .attr('cx', event.x)
-      .attr('cy', event.y)
-      .attr('r', () => {
-        return this.radius;
-      })
-      .attr('fill', 'red');
-  }
 
+fillResidueTypeCount(residueSubset){
+    this.tempResidueTypeCount = new Map<string,number>();
+    this.initializeTempResidueTypeCount();
+    residueSubset.eachResidue( (r) => {
+		console.log(r.name());
+   		this.tempResidueTypeCount.set(r.name(),this.tempResidueTypeCount.get(r.name()) + 1);
+    });
+    this.residueTypeCount = this.tempResidueTypeCount;
+ 
 }
 
+initializeTempResidueTypeCount(){
+    this.tempResidueTypeCount.set("ALA",0);
+    this.tempResidueTypeCount.set("GLY",0);
+    this.tempResidueTypeCount.set("ILE",0);
+    this.tempResidueTypeCount.set("LEU",0);
+    this.tempResidueTypeCount.set("PRO",0);
+    this.tempResidueTypeCount.set("VAL",0);
+    this.tempResidueTypeCount.set("PHE",0);
+    this.tempResidueTypeCount.set("TRP",0);
+    this.tempResidueTypeCount.set("TYR",0);
+    this.tempResidueTypeCount.set("ASP",0);
+    this.tempResidueTypeCount.set("GLU",0);
+    this.tempResidueTypeCount.set("ARG",0);
+    this.tempResidueTypeCount.set("HIS",0);
+    this.tempResidueTypeCount.set("LYS",0);
+    this.tempResidueTypeCount.set("SER",0);
+    this.tempResidueTypeCount.set("THR",0);
+    this.tempResidueTypeCount.set("CYS",0);
+    this.tempResidueTypeCount.set("MET",0);
+    this.tempResidueTypeCount.set("ASN",0);
+    this.tempResidueTypeCount.set("GLN",0);
+    
+}
+
+}
 
