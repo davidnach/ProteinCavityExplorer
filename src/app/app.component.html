@@ -7,7 +7,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a href="http://procavx.proj.cs.wwu.edu" class="navbar-brand">Protein Cavity Explorer</a>
+        <a href="http://procavx.proj.cs.wwu.edu" class="navbar-brand">
+	  <img src="logo.png" width="150px" height="150px" alt="PCX logo">
+	</a>
     </div>
     <div id="navbarCollapse" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
@@ -22,6 +24,8 @@
 
  <!-- <ngx-loading [show]="loading" [config]="{
         backdropBackgroundColour: 'rgba(0, 0, 255, .75)'}"></ngx-loading> -->
-      <ng4-loading-spinner> </ng4-loading-spinner>
+ <div class="my-container">
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+</div>   
   <router-outlet>
 </router-outlet>
