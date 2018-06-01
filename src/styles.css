@@ -3,8 +3,10 @@
 footer {
     text-align: center;
     background-color: #2089cb;
-    position: fixed;
+    position: absolute;
+    z-index: -1;
     left: 0;
     bottom: 0;
     width: 100%;
+    float: right;
 }
