@@ -11,3 +11,17 @@
     </rect>
   </g>
 </svg> -->
+<div>
+  <button (click)="randomize()">Update</button>
+  <div *ngIf="barChartData.length > 0" style="display: block">
+    <canvas baseChart
+	    height="500" width="1000"
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+</div>

@@ -6,6 +6,7 @@ import {ServerService} from './server.service';
 import {UserInputService} from './userinput.service';
 import {GlobalData} from './globaldata.service';
 import {Routes, RouterModule} from "@angular/router";
+import { ChartsModule } from 'ng2-charts';
 
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
@@ -15,7 +16,8 @@ import { ExperimentResultsComponent} from './experiment-results/experiment-resul
 import { AboutComponent } from './about/about.component';
 import { LoadingModule } from 'ngx-loading';
 import { BarchartsComponent } from './barcharts/barcharts.component';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { ChecklistModule} from 'angular-checklist';
 
 const appRoutes: Routes = [
   {path: '',component: UserInputComponent},
@@ -37,7 +39,10 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    ChartsModule,
+    MatCheckboxModule,
+    ChecklistModule
   ],
   providers: [ServerService,UserInputService,GlobalData],
   bootstrap: [AppComponent]

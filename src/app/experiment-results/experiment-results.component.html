@@ -1,28 +1,38 @@
 <!--<div id="wrapper">-->
-<!--<p> Experiment ID : {{experimentId.expId}}</p>-->
-<h2>Select Pocket</h2>
-<div>
-  <select type="number" [(ngModel)]="pocketNumber" (ngModelChange)="colorPocketResidues(pocketNumber)">
-      <option *ngFor="let pocket of pocketNums" [ngValue]="pocket">{{pocket}}</option>
-  </select>
+<h2>Experiment ID: {{experimentId.expId}}</h2>
+<h2>Protein: {{pid}}</h2>
 
-</div>
-
-<!--<svg width="100%" height="1200" class="mySvg" (click)="clicked($event)">
-<text x="10" y="20">Click anywhere</text>
-</svg>-->
 <div id="container">
-  <div id="viewer"></div>
-  <div id="barchart">
-    <barcharts  [residueTypeCount] = 'residueTypeCount'></barcharts>
+  <div id="viewcontainer">
+    
+    <label for="pocket-select">Select a pocket residue:</label>
+    <select id="pocket-select" type="number" [(ngModel)]="pocketNumber" (ngModelChange)="colorPocketResidues(pocketNumber)">
+      <option *ngFor="let pocket of pocketNums" [ngValue]="pocket">{{pocket}}</option>
+    </select>
+    <br/>
+    <div id="viewer"></div>
+    <!--<div id="fileinfo">
+      This is where the pdb or surf files or rmutant files info goes
+    </div>-->
   </div>
+
+<!--<h1>{{pocketsSelected}}</h1>-->
+
+<div id="barchart-wrapper">
+  <div id="checkbox-wrapper-outer">
+    <button (click)="selectAll()" class="select-button">select all</button>
+    <button (click)="unselectAll()" class="select-button">unselect</button>
+    <br/>
+    <div id="checkbox-wrapper-inner">
+      <ng-container *ngFor="let pocket of selectedPocketsTracker;let idx = index" >
+	<mat-checkbox class="checkboxes" [(ngModel)]="pocket.checked" (change)="changed()">
+	  {{idx}}
+	</mat-checkbox> 
+	<!--<br/>-->
+      </ng-container>
+    </div>
+  </div>
+  <barcharts id="bardisplay" [inputBarChartData]="barChartData"></barcharts>
+</div>              
+
 </div>
-  <!--
-        <div id="viewcontainer">
-                <div id="viewer" ></div>
-                <div id="fileinfo">
-This is where the pdb or surf files or rmutant files info goes
-                </div>
-        </div>
-</div>-->
-              

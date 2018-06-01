@@ -10,6 +10,8 @@ import { HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Inject }  from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { BarchartsComponent} from '../barcharts/barcharts.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {VERSION} from '@angular/material';
 
 @Component({
   selector: 'app-experiment-results',
@@ -17,58 +19,69 @@ import { BarchartsComponent} from '../barcharts/barcharts.component';
   styleUrls: ['./experiment-results.component.css']
 })
 export class ExperimentResultsComponent   {
+    aminos = ['ALA','ARG','ASN','ASP','CYS','GLN','GLU','GLY','HIS','ILE','LEU','LYS','MET','PHE','PRO','SER','THR','TRP','TYR','VAL'];
+    version = VERSION;
+    isLinear = true;
+  items = [
+  ];
     pid : string;
     experimentId : string;
     showSpinner: boolean = true;
     residueTypeCount: Map<string, number>;
-    tempResidueTypeCount: Map<string,number>;
+    baseResidueTypeCount: Map<string,number>;
     color;
     viewer;
     parent;
     structure;
     orig_structure;
-    pocketNums;
-    pocketNumber:number;
+    selectedPocketsTracker = [];
+    pocketNums = [];
     pocketSelected : boolean = false;
-
-
+    barChartData : any[] = [];
+    selectedResidues;
+    numPockets = 0;
    //d3 stuff
     radius = 10;
+    initGraphSelect = 0;
 
   constructor(private userInputService : UserInputService,
 	      private globaldata : GlobalData,
 	      private http: HttpClient,
 	      @Inject(DOCUMENT) document) {
-	this.residueTypeCount = new Map<string,number>();
-        this.tempResidueTypeCount = new Map<string,number>();
-        this.initializeTempResidueTypeCount();
+	this.residueTypeCount;
+        this.baseResidueTypeCount = new Map<string,number>();
+	this.initializeBaseResidueTypeCount(this.baseResidueTypeCount);
+        this.barChartData[0] = { data : [1,2,3] , label : "select all to begin"};
   }
 
 
   ngOnInit() {
-	this.pocketNums = Array.from(this.globaldata.getMap().keys());
+     	  
+       this.setPocketNums();
 	this.experimentId = this.globaldata.getExperimentId();
-	console.log(this.experimentId);
+     	
+       console.log(this.experimentId);
 	this.pid = this.globaldata.getPid();
 	console.log(this.pid)
 	this.parent = document.getElementById('viewer');
 	this.color = pv.color;
-
     
 	var options = {
-          width: 600,
-          height: 600,
+          width: 500,
+          height: 500,
           antialias: true,
           quality : 'high'
          };
  	
 	this.viewer = pv.Viewer(this.parent, options);
  	this.color = pv.color;
+        
         var url = "http://www.rcsb.org/pdb/files/";
         url = url + this.pid + ".pdb";
         pv.io.fetchPdb(url, (structure) => {
 	    this.orig_structure = structure;
-            //this.viewer.cartoon('protein', structure);
+	    //this.structure = this.orig_structure;
+            this.viewer.cartoon('protein', structure);
             this.viewer.autoZoom();
             this.viewer.centerOn(structure);
 
@@ -76,16 +89,46 @@ export class ExperimentResultsComponent   {
       // print PDB into box
       //var fileinfo = document.getElementById("fileinfo");
       //fileinfo.innerHTML(this.http.get(url));
-	
-}
-
-
- colorPocketResidues(pocketNum : number){
+  }
+    /*
+    ngDoCheck() {
+	if (typeof this.structure !== 'undefined') {
+	    if (this.initGraphSelect == 0) {
+		this.selectAll();
+		this.initGraphSelect = 1;
+	    }
+	}
+    }*/
+    
+    colorPocketResidues(pocketNum : number){
      this.viewer.clear();
+     this.structure = this.orig_structure;
+     this.viewer.cartoon('protein',this.structure);
+     var residues = this.globaldata.getPocketResidues(pocketNum);
+     var sel = this.structure.select({rindices: residues});
+     //this.fillResidueTypeCount(sel);
+     this.viewer.spheres('structure.sel', sel,{});
+     this.viewer.forEach( (structure) => {
+	 structure.colorBy(this.color.uniform('red'), sel);
+     });
+     //this.viewer.requestRedraw();
+     this.pocketSelected = true;
+     
+     /*this.viewer.clear();
     this.structure = this.orig_structure;
-   // this.viewer.cartoon('protein',this.structure);
-    var residues = this.globaldata.getPocketResidues(pocketNum);
-    var sel = this.structure.select({rindices: residues});
+    this.viewer.cartoon('protein',this.structure);
+    this.selectedResidues = [];
+    var i;
+    var j;
+    for(i = 0; i < this.pocketNums; i++){
+	if(this.items[i].checked == true){
+		var pocketResidues = this.globaldata.getPocketResidues(i);
+		for(j = 0; j < pocketResidues.length;j++){
+			this.selectedResidues.push(pocketResidues[i]);
+		}
+        }
+    }
+    var sel = this.structure.select({rindices: this.selectedResidues});
     this.fillResidueTypeCount(sel);
     this.viewer.spheres('structure.sel', sel,{}); 
     this.viewer.forEach( (structure) => {
@@ -93,43 +136,89 @@ export class ExperimentResultsComponent   {
     });
     //this.viewer.requestRedraw();
     this.pocketSelected = true;
-    
+    */
+ }
+
+
+setPocketNums(){
+  this.pocketNums = Array.from(this.globaldata.getMap().keys());
+  this.numPockets = this.pocketNums.length;
+  var i;
+  for(i = 0; i < this.numPockets; i++){
+	this.selectedPocketsTracker.push({checked : false});
+  } 
 }
 
 
 fillResidueTypeCount(residueSubset){
-    this.tempResidueTypeCount = new Map<string,number>();
-    this.initializeTempResidueTypeCount();
+    this.residueTypeCount = this.baseResidueTypeCount;
     residueSubset.eachResidue( (r) => {
 		console.log(r.name());
-   		this.tempResidueTypeCount.set(r.name(),this.tempResidueTypeCount.get(r.name()) + 1);
+   		this.residueTypeCount.set(r.name(),this.residueTypeCount.get(r.name()) + 1);
     });
-    this.residueTypeCount = this.tempResidueTypeCount;
- 
 }
 
-initializeTempResidueTypeCount(){
-    this.tempResidueTypeCount.set("ALA",0);
-    this.tempResidueTypeCount.set("GLY",0);
-    this.tempResidueTypeCount.set("ILE",0);
-    this.tempResidueTypeCount.set("LEU",0);
-    this.tempResidueTypeCount.set("PRO",0);
-    this.tempResidueTypeCount.set("VAL",0);
-    this.tempResidueTypeCount.set("PHE",0);
-    this.tempResidueTypeCount.set("TRP",0);
-    this.tempResidueTypeCount.set("TYR",0);
-    this.tempResidueTypeCount.set("ASP",0);
-    this.tempResidueTypeCount.set("GLU",0);
-    this.tempResidueTypeCount.set("ARG",0);
-    this.tempResidueTypeCount.set("HIS",0);
-    this.tempResidueTypeCount.set("LYS",0);
-    this.tempResidueTypeCount.set("SER",0);
-    this.tempResidueTypeCount.set("THR",0);
-    this.tempResidueTypeCount.set("CYS",0);
-    this.tempResidueTypeCount.set("MET",0);
-    this.tempResidueTypeCount.set("ASN",0);
-    this.tempResidueTypeCount.set("GLN",0);
-    
+initializeBaseResidueTypeCount(resTypeCount){
+    resTypeCount.set("ALA",0);
+    resTypeCount.set("GLY",0);
+    resTypeCount.set("ILE",0);
+    resTypeCount.set("LEU",0);
+    resTypeCount.set("PRO",0);
+    resTypeCount.set("VAL",0);
+    resTypeCount.set("PHE",0);
+    resTypeCount.set("TRP",0);
+    resTypeCount.set("TYR",0);
+    resTypeCount.set("ASP",0);
+    resTypeCount.set("GLU",0);
+    resTypeCount.set("ARG",0);
+    resTypeCount.set("HIS",0);
+    resTypeCount.set("LYS",0);
+    resTypeCount.set("SER",0);
+    resTypeCount.set("THR",0);
+    resTypeCount.set("CYS",0);
+    resTypeCount.set("MET",0);
+    resTypeCount.set("ASN",0);
+    resTypeCount.set("GLN",0);
+}
+
+selectAll(){
+    console.log('selecting all');
+    var i;
+    for(i = 0; i < this.numPockets; i++) this.selectedPocketsTracker[i].checked = true;
+    this.changed();
+}
+
+unselectAll(){
+   var i;
+   for(i = 0; i < this.numPockets; i++) this.selectedPocketsTracker[i].checked = false;
+   this.changed();
+}
+
+changed(){
+    this.structure = this.orig_structure;
+    var pocketResidueTypeCounts = [];
+    var loadBarChartData = [];
+    var i;
+    var j;
+    var loadDataTracker = 0;
+    var residues = [];
+    for(i = 0; i < this.numPockets; i++){
+	if(this.selectedPocketsTracker[i].checked == true){
+		residues = this.globaldata.getPocketResidues(i);
+ 		console.log(residues);
+		var sel = this.structure.select({rindices: residues});
+		this.fillResidueTypeCount(sel);
+                console.log(this.residueTypeCount);
+		pocketResidueTypeCounts = [];
+                for(j = 0; j < this.aminos.length; j++){
+			pocketResidueTypeCounts[j] = this.residueTypeCount.get(this.aminos[j]);
+		}
+		loadBarChartData[loadDataTracker]= {data : pocketResidueTypeCounts, label: 'pocket' + i};		
+		loadDataTracker++;		
+	}
+    }
+    this.barChartData = loadBarChartData;
+    console.log(this.barChartData);		 
 }
 
 }
