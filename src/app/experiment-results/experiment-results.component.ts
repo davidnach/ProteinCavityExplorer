@@ -51,7 +51,7 @@ export class ExperimentResultsComponent   {
 	this.residueTypeCount;
         this.baseResidueTypeCount = new Map<string,number>();
 	this.initializeBaseResidueTypeCount(this.baseResidueTypeCount);
-        this.barChartData[0] = { data : [1,2,3] , label : "select all to begin"};
+      //this.barChartData[0] = { data : [1,2,3] , label : "select all to begin"};
   }
 
 
@@ -84,8 +84,11 @@ export class ExperimentResultsComponent   {
             this.viewer.cartoon('protein', structure);
             this.viewer.autoZoom();
             this.viewer.centerOn(structure);
-
+	    this.selectAll(); // display fully selected graph on page load
 	});
+      //this.structure = this.orig_stucture;
+      //this.selectAll();
+      
       // print PDB into box
       //var fileinfo = document.getElementById("fileinfo");
       //fileinfo.innerHTML(this.http.get(url));
@@ -182,7 +185,7 @@ initializeBaseResidueTypeCount(resTypeCount){
 }
 
 selectAll(){
-    console.log('selecting all');
+    console.log('selecting all...struct: ' + this.orig_structure);
     var i;
     for(i = 0; i < this.numPockets; i++) this.selectedPocketsTracker[i].checked = true;
     this.changed();

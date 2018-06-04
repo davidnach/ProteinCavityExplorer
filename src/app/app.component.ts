@@ -12,7 +12,8 @@ import {GlobalData} from './globaldata.service';
 })
 
 export class AppComponent {
-  constructor(private serverService: ServerService,
+     public loading = false;  
+constructor(private serverService: ServerService,
   private router: Router,private userInputService: UserInputService,
 private globaldata : GlobalData ){
 
@@ -28,14 +29,17 @@ private globaldata : GlobalData ){
    }
 
   submitPidToServer(pid : string){
-   
+   this.loading = true;
    this.serverService.createExperiment({pid: pid})
     .subscribe((response) => {
       console.log(response['expId']);
       this.globaldata.setExperimentId(response['expId']);
-      this.globaldata.setPockets(response['pockets']);	
+      this.globaldata.setPockets(response['pockets']);
+this.loading = false;
+console.log(this.loading);	
       this.router.navigate(['experiment']);},
-    (error) => {console.log(error)});
+    (error) => {this.loading = false;
+console.log(error);});
 
 
   }
