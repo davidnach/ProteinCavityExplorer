@@ -26,7 +26,10 @@
               <label for="Experiment id">Experiment ID</label>
               <input type="text" id="experimentId" class="form-control" ngModel name="experimentId" pattern="^([1-9]{1})([a-zA-Z0-9]{3})([a-fA-f0-9]{16})$">
               <span class="help-block" style="color:red" *ngIf="!f2.valid"
-              >Try something else.</span>
+		    >Try something else.</span>
+	           <span class="experimentExists" style="color:red" *ngIf="&&(!f.touched && submittedForm) "></span>
+
+
             </div>
             <button class="btn btn-default" type="submit">go</button>
           </div>

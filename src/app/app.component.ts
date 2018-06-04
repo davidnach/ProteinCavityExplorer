@@ -44,8 +44,8 @@ private globaldata : GlobalData ){
     this.serverService.retrieveExperiment({expId : experimentId})
     .subscribe((response) => {
     console.log(response);
-    if(response === 'No such experiment!') {
-
+    if(response === 'invalid') {
+      this.globaldata.setPid(response['pid']);
     } else {
       this.globaldata.setPid(response['pid']);
       this.globaldata.setExperimentId(response['expId']);

@@ -63,9 +63,13 @@ export class UserInputComponent implements OnInit {
     }
     
     submitExperimentId(form : NgForm){
-	if(form.valid) this.userInputService.experimentIdEntered.emit(form.value.experimentId);
-	this.globalData.setExperimentId(form.value.experimentId);
-    }
+         this.submittedForm=true;
+	 if(form.valid){
+		this.userInputService.experimentIdEntered.emit(form.value.experimentId);
+         	this.globalData.setExperimentId(form.value.experimentId);
+    	 }
+	 
+}
 
     checkIfPidExists(pid){
 	console.log(pid.toUpperCase());
