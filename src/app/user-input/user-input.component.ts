@@ -16,6 +16,7 @@ export class UserInputComponent implements OnInit {
   pidSet: Set<string>;
   pidExists: boolean = false;
   submittedForm: boolean = false;
+  submittedExpForm: boolean = false;
   constructor(private userInputService : UserInputService,
 	      private http: HttpClient,
 	      private serverService : ServerService,
@@ -64,7 +65,7 @@ export class UserInputComponent implements OnInit {
     
     submitExperimentId(form : NgForm){
 	this.globalData.setExperimentId("invalid");
-	this.submittedForm=true;
+	this.submittedExpForm=true;
 	if(form.valid){
 		this.userInputService.experimentIdEntered.emit(form.value.experimentId);
     	}
