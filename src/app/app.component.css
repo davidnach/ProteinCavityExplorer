@@ -14,6 +14,7 @@
 .navbar-default {
     background-color: #2089cb;
     height:125px;
+    padding-left:125px;
 }
 .navbar-nav {
     margin-left: 15px;
