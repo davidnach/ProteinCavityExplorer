@@ -6,6 +6,7 @@
   <div id="viewcontainer">
     
     <label for="pocket-select">Select a pocket residue:</label>
+    <h1 *ngIf="pocketSelected">Area:{{selectedPocketArea}} </h1>
     <select id="pocket-select" type="number" [(ngModel)]="pocketNumber" (ngModelChange)="colorPocketResidues(pocketNumber)">
       <option *ngFor="let pocket of pocketNums" [ngValue]="pocket">{{pocket}}</option>
     </select>

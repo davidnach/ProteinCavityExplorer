@@ -43,15 +43,13 @@ export class ExperimentResultsComponent   {
    //d3 stuff
     radius = 10;
     initGraphSelect = 0;
+    selectedPocketArea;
 
   constructor(private userInputService : UserInputService,
 	      private globaldata : GlobalData,
 	      private http: HttpClient,
 	      @Inject(DOCUMENT) document) {
-	this.residueTypeCount;
-        this.baseResidueTypeCount = new Map<string,number>();
-	this.initializeBaseResidueTypeCount(this.baseResidueTypeCount);
-      //this.barChartData[0] = { data : [1,2,3] , label : "select all to begin"};
+	      this.residueTypeCount = new Map <string,number>();
   }
 
 
@@ -80,15 +78,11 @@ export class ExperimentResultsComponent   {
         url = url + this.pid + ".pdb";
         pv.io.fetchPdb(url, (structure) => {
 	    this.orig_structure = structure;
-	    //this.structure = this.orig_structure;
             this.viewer.cartoon('protein', structure);
             this.viewer.autoZoom();
             this.viewer.centerOn(structure);
-	    this.selectAll(); // display fully selected graph on page load
+	    //this.selectAll(); // display fully selected graph on page load
 	});
-      //this.structure = this.orig_stucture;
-      //this.selectAll();
-      
       // print PDB into box
       //var fileinfo = document.getElementById("fileinfo");
       //fileinfo.innerHTML(this.http.get(url));
@@ -104,6 +98,7 @@ export class ExperimentResultsComponent   {
     }*/
     
     colorPocketResidues(pocketNum : number){
+     this.selectedPocketArea = this.globaldata.getPocketArea(pocketNum);
      this.viewer.clear();
      this.structure = this.orig_structure;
      this.viewer.cartoon('protein',this.structure);
@@ -114,13 +109,9 @@ export class ExperimentResultsComponent   {
      this.viewer.forEach( (structure) => {
 	 structure.colorBy(this.color.uniform('red'), sel);
      });
-     //this.viewer.requestRedraw();
-     this.pocketSelected = true;
-     
-     /*this.viewer.clear();
     this.structure = this.orig_structure;
     this.viewer.cartoon('protein',this.structure);
-    this.selectedResidues = [];
+   /* this.selectedResidues = [];
     var i;
     var j;
     for(i = 0; i < this.pocketNums; i++){
@@ -132,14 +123,12 @@ export class ExperimentResultsComponent   {
         }
     }
     var sel = this.structure.select({rindices: this.selectedResidues});
-    this.fillResidueTypeCount(sel);
+    this.fillResidueTypeCount(sel);*/
     this.viewer.spheres('structure.sel', sel,{}); 
     this.viewer.forEach( (structure) => {
 	structure.colorBy(this.color.uniform('red'), sel);
-    });
-    //this.viewer.requestRedraw();
+    }); 
     this.pocketSelected = true;
-    */
  }
 
 
@@ -150,11 +139,13 @@ setPocketNums(){
   for(i = 0; i < this.numPockets; i++){
 	this.selectedPocketsTracker.push({checked : false});
   } 
+  this.selectedPocketsTracker[1].checked = false;
 }
 
 
 fillResidueTypeCount(residueSubset){
-    this.residueTypeCount = this.baseResidueTypeCount;
+    this.residueTypeCount = new Map<string, number>();
+    this.initializeBaseResidueTypeCount(this.residueTypeCount);
     residueSubset.eachResidue( (r) => {
 		console.log(r.name());
    		this.residueTypeCount.set(r.name(),this.residueTypeCount.get(r.name()) + 1);
@@ -199,6 +190,7 @@ unselectAll(){
 
 changed(){
     this.structure = this.orig_structure;
+    console.log(this.structure);
     var pocketResidueTypeCounts = [];
     var loadBarChartData = [];
     var i;
@@ -217,7 +209,8 @@ changed(){
 			pocketResidueTypeCounts[j] = this.residueTypeCount.get(this.aminos[j]);
 		}
 		loadBarChartData[loadDataTracker]= {data : pocketResidueTypeCounts, label: 'pocket' + i};		
-		loadDataTracker++;		
+		loadDataTracker++;
+                residues = [];	
 	}
     }
     this.barChartData = loadBarChartData;

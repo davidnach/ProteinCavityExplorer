@@ -14,10 +14,26 @@ export class BarchartsComponent  {
 @ViewChild(BaseChartDirective)
 public chart: BaseChartDirective;
  public barChartOptions:any = {
-    scaleShowVerticalLines: false,
-    responsive: true
+    title: {
+            display: true,
+            text: 'Amino acid count by pocket'
+        },
+    scales: {
+	yAxes: [{
+	   scaleLabel: {
+		display: true,
+		labelString: 'Number of residues'
+		}
+	}],
+	xAxes: [{
+                display: true,
+                labelString: 'Essential Amino Acids'
+            }]
+    }
   };
-
+ 
+  
+ 
   public barChartLabels:string[] = ['ALA','ARG','ASN','ASP','CYS','GLN','GLU','GLY','HIS','ILE','LEU','LYS','MET','PHE','PRO','SER','THR','TRP','TYR','VAL'];          
   public barChartType:string = 'bar';                                                                  
   public barChartLegend:boolean = true;                                                              
