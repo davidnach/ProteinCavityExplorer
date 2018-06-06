@@ -73,7 +73,7 @@ router.post('/retrieveExperiment', (req,res) => {
 	    res.send(JSON.stringify(proteinInfo));
 	} else {
 	    // this needs handling
-	    res.send(JSON.stringify('No such experiment!'))
+	    res.send('invalid')
 	}
     } else {
 	// see above, since frontend cannot send anything invalid

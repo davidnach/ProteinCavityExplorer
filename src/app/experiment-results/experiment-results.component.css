@@ -3,16 +3,79 @@ overflow:auto;
 border-radius: 3px;
 }
 #viewer{
-width:600px;
-height:600px;
-overflow:auto;
-margin-left: auto;
-margin-right: auto;
+    width:500px;
+    height:500px;
+    overflow:auto;
+    /*margin-left: auto;
+    margin-right: auto;*/
+    float:left;
+}
+#barchart {
+	width:600px;
+	height:300px;
+	margin-top: 300px;
+	float: left;
+	margin-left: 20px;
+	border: 1px solid black;
+}
+#container {
+    /*width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid black;*/
 }
 #fileinfo{
-width: 600px;
-height: 600px;
-overflow-y: scroll;
-margin-left:auto;
-margin-right: auto;
+    width: 600px;
+    height: 600px;
+    overflow-y: scroll;
+    margin-left:auto;
+    margin-right: auto;
 }
+#viewcontainer {
+    float:left;
+    border: 1px solid black;
+}
+
+/* BARGRAPH + SELECTION CHECKBOXES */
+#barchart-wrapper {
+    /*width:	calc(100% - 500px);*/
+    float:      left;
+    display:    block;
+    overflow:	auto;
+    border:	1px solid black;
+}
+#checkbox-wrapper-outer {
+    width: 170px;
+    /*border-right: 1px solid black;*/
+    float:	left;
+    /*height:	400px;*/
+    /*overflow:	auto;*/
+}
+#checkbox-wrapper-inner {
+    /*
+    width:20%;
+    min-width: 120px;
+   */
+}
+mat-checkbox {
+    width:	45px;
+    border-top: 1px dotted black;
+    float:	left;
+    display:	block;
+    margin-left:10px;
+}
+#bardisplay {
+    /*width: 80%;*/
+    max-width: calc(100% - 170px);
+    min-width: 60%;
+    float: left;
+    /*height: 400px;*/
+}
+.select-button {
+    /*margin-left: 20px;*/
+    width: 80px;
+    /*margin-left: 10px;
+    margin-right: 10px;*/
+    padding: 0px;
+}
+

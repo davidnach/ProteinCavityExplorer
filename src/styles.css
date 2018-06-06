@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+
+footer {
+    text-align: center;
+    background-color: #2089cb;
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    float: right;
+}

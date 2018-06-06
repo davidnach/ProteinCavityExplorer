@@ -16,6 +16,7 @@ export class UserInputComponent implements OnInit {
   pidSet: Set<string>;
   pidExists: boolean = false;
   submittedForm: boolean = false;
+  submittedExpForm: boolean = false;
   constructor(private userInputService : UserInputService,
 	      private http: HttpClient,
 	      private serverService : ServerService,
@@ -63,14 +64,20 @@ export class UserInputComponent implements OnInit {
     }
     
     submitExperimentId(form : NgForm){
-	if(form.valid) this.userInputService.experimentIdEntered.emit(form.value.experimentId);
-	this.globalData.setExperimentId(form.value.experimentId);
-    }
+	this.globalData.setExperimentId("invalid");
+	this.submittedExpForm=true;
+	if(form.valid){
+		this.userInputService.experimentIdEntered.emit(form.value.experimentId);
+    	}
+	 
+}
 
     checkIfPidExists(pid){
 	console.log(pid.toUpperCase());
 	this.pidExists = this.pidSet.has(pid.toUpperCase());
 	console.log(this.pidExists);	
     }	
-
+    checkIfExperimentExists() {
+    	return(this.globalData.getExperimentId()==="invalid")
+    }
 }

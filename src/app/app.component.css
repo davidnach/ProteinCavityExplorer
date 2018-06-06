@@ -6,3 +6,21 @@
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
 }
+
+.navbar-brand {
+    padding: 0px;
+}
+
+.navbar-default {
+    background-color: #2089cb;
+    height:125px;
+    padding-left:125px;
+}
+.navbar-nav {
+    margin-left: 15px;
+}
+.navbar-default .navbar-nav > li > a {
+    color: white;
+    margin-top: 30px;
+    font-size: 1.5em;
+}

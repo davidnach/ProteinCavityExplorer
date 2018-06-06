@@ -4,9 +4,11 @@ export class GlobalData{
 	pid : string;
   experimentId : string;
 	pocketToResidues;
+	pocketToArea;
 
 	constructor(){
 		this.pocketToResidues = new Map<number,number[]>();
+		this.pocketToArea = new Map<number,number>();
 	}
 
 
@@ -28,18 +30,19 @@ export class GlobalData{
 	}
 	
 	getPocketNums(){
-		console.log(this.pocketToResidues);
-		console.log(this.pocketToResidues.valueOf(1));
-		console.log(Array.from(this.pocketToResidues.keys()));
 	       return this.pocketToResidues.keys();
 	}
 
 	getMap(){
 		return this.pocketToResidues;
 	}
+	
+	getPocketArea(pocketNum : number){
+		return this.pocketToArea.get(pocketNum);
+	}
 
 	getPocketResidues(pocketNum : number){
-		return this.pocketToResidues[pocketNum];
+		return this.pocketToResidues.get(pocketNum);
 	}
 
 	setPockets(pockets){
@@ -53,6 +56,7 @@ export class GlobalData{
 				residues.push(Number(residuesString[j]));
 			}
 			this.pocketToResidues.set(i,residues);
+			this.pocketToArea.set(i,pockets[i].area);
 			residues = [];
 		}
 		console.log(this.pocketToResidues);
