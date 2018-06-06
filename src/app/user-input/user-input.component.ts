@@ -63,11 +63,11 @@ export class UserInputComponent implements OnInit {
     }
     
     submitExperimentId(form : NgForm){
-         this.submittedForm=true;
-	 if(form.valid){
+	this.globalData.setExperimentId("invalid");
+	this.submittedForm=true;
+	if(form.valid){
 		this.userInputService.experimentIdEntered.emit(form.value.experimentId);
-         	this.globalData.setExperimentId(form.value.experimentId);
-    	 }
+    	}
 	 
 }
 
@@ -76,5 +76,7 @@ export class UserInputComponent implements OnInit {
 	this.pidExists = this.pidSet.has(pid.toUpperCase());
 	console.log(this.pidExists);	
     }	
-
+    checkIfExperimentExists() {
+    	return(this.globalData.getExperimentId()==="invalid")
+    }
 }

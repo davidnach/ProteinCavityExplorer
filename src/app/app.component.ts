@@ -45,20 +45,23 @@ console.log(error);});
   }
   
   submitExperimentId(experimentId : string){
+     this.loading = true;
     this.serverService.retrieveExperiment({expId : experimentId})
     .subscribe((response) => {
     console.log(response);
     if(response === 'invalid') {
-      this.globaldata.setPid(response['pid']);
+      this.globaldata.setExperimentId('invalid');
     } else {
       this.globaldata.setPid(response['pid']);
       this.globaldata.setExperimentId(response['expId']);
-      this.globaldata.setPockets(response['pockets']);	
+      this.globaldata.setPockets(response['pockets']);
+         this.loading = false;
       this.router.navigate(['experiment']);
     }	
 
     },	
-    (error) => {console.log(error)});
+    (error) => {console.log(error)
+       this.loading =false;});
   }
 
 }
