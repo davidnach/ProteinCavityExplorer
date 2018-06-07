@@ -10,7 +10,10 @@
       "assets": [
         "assets",
           "favicon.png",
-	  "logo.png"
+	  "logo.png",
+	  "logo_wide.png",
+	  "westernlogo_white_med.png",
+	  "app"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -20,8 +23,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css",
-        "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+          "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+	  "styles.css"
       ],
       "scripts": ["./assets/js/test.js",
         "./assets/js/bio-pv.min.js"

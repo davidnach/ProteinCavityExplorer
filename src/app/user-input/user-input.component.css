@@ -8,10 +8,13 @@
 }
 
 .Absolute-Center {
-  width: 50%;
-  height: 50%;
+  width: 400px;
+  height: 400px;
   overflow: auto;
   margin: auto;
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
+  background-color: white;
+  border-radius: 20px;
+  padding-top: 35px;
 }

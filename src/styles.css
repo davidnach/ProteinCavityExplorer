@@ -1,7 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
-
+body {
+    background-color: lightblue;
+}
+.module {
+    background-color: white;
+    border-radius: 20px;
+}
 footer {
-    text-align: center;
+    text-align: left;
+    color: white;
+    height:80px;
     background-color: #2089cb;
     position: absolute;
     z-index: -1;
@@ -9,4 +17,10 @@ footer {
     bottom: 0;
     width: 100%;
     float: right;
+}
+footer img {
+    float:left;
+}
+#footer-text {
+    padding:10px;
 }

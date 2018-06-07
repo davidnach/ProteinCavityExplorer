@@ -8,7 +8,7 @@
             <div class="form-group">
               <p><em>Begin a new experiment:</em></p>
               <label for="pid">Enter a protein ID</label>
-              <input type="text"
+              <input type="text" size="4" maxlength="4"
                id="pid" class="form-control" ngModel name="pid" pattern="^([1-9]{1})([a-zA-Z0-9]{3})$">
                <span class="help-block" style="color:red" *ngIf="!f.valid"
                >Please use valid PID format (one digit followed by three alpha-numeric characters).</span>

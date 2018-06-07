@@ -1,15 +1,13 @@
 <!--<div id="wrapper">-->
-<h2>Experiment ID: {{experimentId.expId}}</h2>
-<h2>Protein: {{pid}}</h2>
-
 <div id="container">
-  <div id="viewcontainer">
-    
+  <h2>Experiment ID: {{experimentId.expId}}</h2>
+  <h2>Protein: {{pid}}</h2>
+  <div id="viewcontainer">  
     <label for="pocket-select">Select a pocket residue:</label>
-    <h1 *ngIf="pocketSelected">Area:{{selectedPocketArea}} </h1>
     <select id="pocket-select" type="number" [(ngModel)]="pocketNumber" (ngModelChange)="colorPocketResidues(pocketNumber)">
       <option *ngFor="let pocket of pocketNums" [ngValue]="pocket">{{pocket}}</option>
     </select>
+    <span *ngIf="pocketSelected">Area: {{selectedPocketArea}} </span>
     <br/>
     <div id="viewer"></div>
     <!--<div id="fileinfo">
