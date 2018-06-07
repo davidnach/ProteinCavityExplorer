@@ -13,8 +13,8 @@
 
 .navbar-default {
     background-color: #2089cb;
-    height:50px;
-    padding-left:0px;/*125px;*/
+    height:75px;
+    padding:10px;
 }
 .navbar-nav {
     margin-left: 15px;
