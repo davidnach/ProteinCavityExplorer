@@ -19,5 +19,11 @@ export class ServerService{
     	return this.http.post('/api/retrieveExperiment',experimentId);
     }
 
+
+     getPidsWithSurfReports(){
+	
+	return this.http.post('/api/getPidsWithSurfReports',{ignore : "ignore"});
+    }
+
     
 }

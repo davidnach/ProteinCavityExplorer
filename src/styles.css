@@ -24,9 +24,10 @@ footer img {
 #footer-text {
     padding:10px;
 }
-.mat-checkbox-frame {
-    border-style: none !important;
-}
-.mat-checkbox-checked .mat-checkbox-checkmark {
-    opacity: 0 !important;
+
+.container{
+  background-color: white;
+  border-radius: 20px;
+  padding: 10px 10px;
+  margin: 20px;
 }

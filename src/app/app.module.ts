@@ -14,6 +14,10 @@ import { AppComponent } from './app.component';
 import { UserInputComponent } from './user-input/user-input.component';
 import { ExperimentResultsComponent} from './experiment-results/experiment-results.component';
 import { AboutComponent } from './about/about.component';
+import { HelpComponent } from './help/help.component';
+
+import { PDBListComponent } from './PDBList/PDBList.component';
+
 import { LoadingModule } from 'ngx-loading';
 import { BarchartsComponent } from './barcharts/barcharts.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -23,6 +27,8 @@ const appRoutes: Routes = [
   {path: '',component: UserInputComponent},
   {path: 'experiment', component: ExperimentResultsComponent},
   {path: 'about', component: AboutComponent}
+  {path: 'help', component: HelpComponent}
+  {path: '{PDBList', component: PDBListComponent}
 ];
 
 @NgModule({
@@ -31,6 +37,8 @@ const appRoutes: Routes = [
     UserInputComponent,
     ExperimentResultsComponent,
     AboutComponent,
+HelpComponent,
+    PDBListComponent,
     BarchartsComponent
   ],
   imports: [

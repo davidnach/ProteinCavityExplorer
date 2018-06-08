@@ -1,9 +1,6 @@
 let csvToJson = require('convert-csv-to-json');
  
-let fileInputName = '1a00A.csv'; 
-let fileOutputName = 'myOutputFile.json';
- 
-csvToJson.generateJsonFileFromCsv(fileInputName,fileOutputName);
+
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');

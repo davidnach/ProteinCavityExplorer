@@ -28,7 +28,7 @@ export class UserInputComponent implements OnInit {
       let parseString = require('xml2js').parseString;
       var xml;
       this.pidSet = new Set<string>();
-      this.http.get(url+opts, {responseType:'text'})
+      /*this.http.get(url+opts, {responseType:'text'})
 	  .map(response => {
 	      let data;
 	      parseString(response, (err, result) => {
@@ -43,8 +43,17 @@ export class UserInputComponent implements OnInit {
 	      return data;
 	  })
 	  .subscribe(data => {
-	      console.log(data); // print again...
-	  }); 
+	      console.log(data); // print again;
+	});*/
+
+	  this.serverService.getPidsWithSurfReports().subscribe((response) => {
+		var i;
+		for(i = 0; i < 13878; i++){
+			this.pidSet.add(response[i]);
+		}
+		console.log("done getting pids w/ surf reports");
+	 });
+
   }
     
     ngOnInit() {
@@ -73,9 +82,8 @@ export class UserInputComponent implements OnInit {
 }
 
     checkIfPidExists(pid){
-	console.log(pid.toUpperCase());
-	this.pidExists = this.pidSet.has(pid.toUpperCase());
-	console.log(this.pidExists);	
+	console.log(this.pidSet.has(pid.toLowerCase()));
+	this.pidExists = this.pidSet.has(pid.toLowerCase());
     }	
     checkIfExperimentExists() {
     	return(this.globalData.getExperimentId()==="invalid")
