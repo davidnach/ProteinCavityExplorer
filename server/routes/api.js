@@ -85,7 +85,6 @@ router.post('/retrieveExperiment', (req,res) => {
 router.post('/getPidsWithSurfReports',(req,res) => {
 	
 	var data = fs.readFileSync('./A_ChainPDBs.txt').toString().split('\n');
-	console.log(data);
 	res.send(data);
 });
 	

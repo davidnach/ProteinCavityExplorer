@@ -83,19 +83,46 @@ export class ExperimentResultsComponent   {
             this.viewer.centerOn(structure);
 	    //this.selectAll(); // display fully selected graph on page load
 	});
-      // print PDB into box
-      //var fileinfo = document.getElementById("fileinfo");
-      //fileinfo.innerHTML(this.http.get(url));
+
+var prevPicked = null;      
+
+this.parent.addEventListener('mousemove', (event) => {
+    var rect = this.viewer.boundingClientRect();
+    var picked = this.viewer.pick({ x : event.clientX - rect.left,
+                               y : event.clientY - rect.top });
+    if (prevPicked !== null && picked !== null &&
+        picked.target() === prevPicked.atom) {
+      return;
+    }
+    if (prevPicked !== null) {
+      // reset color of previously picked atom.
+      this.setColorForAtom(prevPicked.node, prevPicked.atom, prevPicked.color);
+    }
+    if (picked !== null) {
+      var atom = picked.target();
+      document.getElementById('picked-atom-name').innerHTML = atom.qualifiedName();
+      // get RGBA color and store in the color array, so we know what it was
+      // before changing it to the highlight color.
+      var color = [0,0,0,0];
+      picked.node().getColorForAtom(atom, color);
+      prevPicked = { atom : atom, color : color, node : picked.node() };
+
+      this.setColorForAtom(picked.node(), atom, 'blue');
+    } else {
+      document.getElementById('picked-atom-name').innerHTML = '&nbsp;';
+      prevPicked = null;
+    }
+   this.viewer.requestRedraw();
+});
   }
-    /*
-    ngDoCheck() {
-	if (typeof this.structure !== 'undefined') {
-	    if (this.initGraphSelect == 0) {
-		this.selectAll();
-		this.initGraphSelect = 1;
-	    }
-	}
-    }*/
+  
+   
+
+    setColorForAtom(go, atom, color) {
+    var view = go.structure().createEmptyView();
+    view.addAtom(atom);
+    go.colorBy(pv.color.uniform(color), view);
+   }
     
     colorPocketResidues(pocketNum : number){
      this.selectedPocketArea = this.globaldata.getPocketArea(pocketNum);
@@ -146,10 +173,15 @@ setPocketNums(){
 fillResidueTypeCount(residueSubset){
     this.residueTypeCount = new Map<string, number>();
     this.initializeBaseResidueTypeCount(this.residueTypeCount);
+    var residueCount = 0;
+    console.log(residueSubset);
+    console.log(residueSubset.residueCount());
     residueSubset.eachResidue( (r) => {
+		residueCount++;
 		console.log(r.name());
    		this.residueTypeCount.set(r.name(),this.residueTypeCount.get(r.name()) + 1);
     });
+    console.log(residueCount);
 }
 
 initializeBaseResidueTypeCount(resTypeCount){
