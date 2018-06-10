@@ -3,12 +3,23 @@
     border-radius: 3px;
 }
 #viewer{
-    width:500px;
-    height:500px;
+    width:490px;
+    height:490px;
     /*margin-left: auto;
     margin-right: auto;*/
     float:left;
+    overflow:hidden;
 }
+select:invalid { color: gray; }
+#view-labels {
+    height:50px;
+    width: 500px;
+    padding:10px;
+    margin: 0px;
+    float:left;
+    text-align:left;
+}
+#hover-atom {text-align:right;}
 #barchart {
 	width:600px;
 	height:300px;
@@ -35,7 +46,8 @@
     border: 1px solid black;
     background-color:white;
     border-radius: 10px;
-    padding:10px;
+    height: 550px;
+    width: 500px;
 }
 
 /* BARGRAPH + SELECTION CHECKBOXES */

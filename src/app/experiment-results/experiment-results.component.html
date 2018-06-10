@@ -3,13 +3,14 @@
   <h2>Experiment ID: {{experimentId.expId}}</h2>
   <h2>Protein: {{pid}}</h2>
   <div id="viewcontainer">  
-    <label for="pocket-select">Select a pocket residue:</label>
-    <select id="pocket-select" type="number" [(ngModel)]="pocketNumber" (ngModelChange)="colorPocketResidues(pocketNumber)">
-      <option *ngFor="let pocket of pocketNums" [ngValue]="pocket">{{pocket}}</option>
-    </select>
-    <span *ngIf="pocketSelected">Area: {{selectedPocketArea}} </span>
-    <br/>
-    <div id='picked-atom-name' style='text-align:center;'>&nbsp;</div>
+    <div id="view-labels">
+      <label for="pocket-select"><u>Pocket Residue:</u></label>
+      <select id="pocket-select" type="number" [(ngModel)]="pocketNumber" (ngModelChange)="colorPocketResidues(pocketNumber)">
+	<option *ngFor="let pocket of pocketNums" [ngValue]="pocket">{{pocket}}</option>
+      </select>
+      <span *ngIf="pocketSelected"><strong><u>Area:</u></strong> {{selectedPocketArea}}</span>
+      <span id="hover-atom"><strong><u>Atom:</u></strong> <span id='picked-atom-name'></span></span>
+    </div>
     <div id="viewer"></div>
     <!--<div id="fileinfo">
       This is where the pdb or surf files or rmutant files info goes
@@ -33,6 +34,7 @@
     </div>
   </div>
   <barcharts id="bardisplay" [inputBarChartData]="barChartData"></barcharts>
+  <piechart></piechart>
 </div>              
 
 </div>
