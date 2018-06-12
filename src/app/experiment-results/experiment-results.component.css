@@ -60,6 +60,7 @@ select:invalid { color: gray; }
     background-color:white;
     border-radius:10px;
     padding:10px;
+    height: 550px;
 }
 #checkbox-wrapper-outer {
     width: 170px;
