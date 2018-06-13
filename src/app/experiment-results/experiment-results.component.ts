@@ -10,6 +10,7 @@ import { HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Inject }  from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { BarchartsComponent} from '../barcharts/barcharts.component';
+import { PieChartComponent} from '../piechart/piechart.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {VERSION} from '@angular/material';
 
@@ -44,6 +45,7 @@ export class ExperimentResultsComponent   {
     radius = 10;
     initGraphSelect = 0;
     selectedPocketArea;
+    pdburl;
 
   constructor(private userInputService : UserInputService,
 	      private globaldata : GlobalData,
@@ -55,11 +57,13 @@ export class ExperimentResultsComponent   {
 
   ngOnInit() {
      	  
-       this.setPocketNums();
-	this.experimentId = this.globaldata.getExperimentId();
+        this.setPocketNums();
+        this.experimentId = this.globaldata.getExperimentId();
      	
        console.log(this.experimentId);
 	this.pid = this.globaldata.getPid();
+	this.pdburl = "https://files.rcsb.org/view/" + this.pid + ".pdb";
+	console.log(this.pdburl);
 	console.log(this.pid)
 	this.parent = document.getElementById('viewer');
 	this.color = pv.color;
@@ -81,6 +85,7 @@ export class ExperimentResultsComponent   {
             this.viewer.cartoon('protein', structure);
             this.viewer.autoZoom();
             this.viewer.centerOn(structure);
+	    this.changed();
 	    //this.selectAll(); // display fully selected graph on page load
 	});
 
@@ -166,7 +171,7 @@ setPocketNums(){
   for(i = 0; i < this.numPockets; i++){
 	this.selectedPocketsTracker.push({checked : false});
   } 
-  this.selectedPocketsTracker[1].checked = false;
+  this.selectedPocketsTracker[0].checked = true;
 }
 
 

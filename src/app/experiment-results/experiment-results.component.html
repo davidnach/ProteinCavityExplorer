@@ -22,7 +22,7 @@
 <div id="barchart-wrapper">
   <div id="checkbox-wrapper-outer">
     <button (click)="selectAll()" class="select-button">select all</button>
-    <button (click)="unselectAll()" class="select-button">unselect</button>
+   <!-- <button (click)="unselectAll()" class="select-button">unselect</button>-->
     <br/>
     <div id="checkbox-wrapper-inner">
       <ng-container *ngFor="let pocket of selectedPocketsTracker;let idx = index" >
@@ -34,7 +34,21 @@
     </div>
   </div>
   <barcharts id="bardisplay" [inputBarChartData]="barChartData"></barcharts>
-  <piechart></piechart>
-</div>              
+</div>
+   
+
+ <div id="pdbwrapper">
+
+<accordion [showArrows]="true" [closeOthers]="false" [expandAll]="true">
+    <accordion-group >
+        <accordion-heading>
+            {{pid}}
+        </accordion-heading>
+	<iframe src="https://files.rcsb.org/view/1hhp.pdb"
+"
+                 frameborder="0"
+                allowfullscreen sandbox> </iframe>
+    </accordion-group>
+</accordion>	  
 
 </div>

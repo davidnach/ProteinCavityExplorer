@@ -2,6 +2,12 @@
 body {
     background-color: lightblue;
 }
+.mat-checkbox-frame {
+    border-style:none!important;
+}
+.mat-checkbox-checked .mat-checkbox-checkmark {
+    opacity: 0!important;
+}
 .module {
     background-color: white;
     border-radius: 20px;

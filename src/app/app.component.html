@@ -1,3 +1,16 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--<script>
+  function bars() {
+     var d = document.getElementById("navbar");
+     if (x.className === "topnav") {
+        x.className += " responsive";
+     } else {
+        x.className = "topnav";
+     }
+  }
+</script>-->
+  
 <!-- NAVBAR HEADER -->
 <nav class="navbar navbar-default">
   <div class="navbar-header">
@@ -5,20 +18,36 @@
       <img src="logo_wide.png" width="300px" height="50px" alt="PCX logo">
     </a>
   </div>
+  <!--
+  <div class="topnav" id="myTopnav">
+    <a href="http://procavx.proj.cs.wwu.edu">Home</a>
+    <a routerLink="/about">About</a>
+    <a href="/allPIDs.html">Protein List</a>
+    <a routerLink="/tutorial">Tutorial</a>
+    <a href="javascript:void(0);" class="icon" onclick="bars()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+  -->
   <div id="navbarCollapse" class="collapse navbar-collapse">
     <ul class="nav navbar-nav">
-      <li> <!-- can highlight with class="active" -->
+      <li>
 	<a href="http://procavx.proj.cs.wwu.edu">Home</a>
       </li>
       <li>
 	<a routerLink="/about">About</a>
       </li>
       <li>
-        <a href="/allPIDs.html">Protein List</a>
+        <a routerLink="/allPIDs">Protein List</a>
       </li>
       <li>
-        <a href="/tutorial.html">Tutorial/Help</a>
+        <a routerLink="/tutorial">Tutorial</a>
       </li>
+      <!--<li>
+	<a href="javascript:void(0);" class="icon" onclick="bars()">
+	  <i class="fa fa-bars"></i>
+	</a>
+      </li>-->
     </ul>
   </div>
 </nav>
