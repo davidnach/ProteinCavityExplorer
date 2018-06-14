@@ -33,19 +33,20 @@ cd  rMutant-pipelineExeOnly
 cd ..
 
 
-# Try surfracer
+#### surfracer does not detect the correct type of cavity
+#### it detects internal, solvent inaccessible cavities
 
-(echo 1;echo ${pdbID}.pdb;echo 1.4;echo 1;echo ; echo;) | ./surfrace5_0_linux_64bit >> /dev/null
-
-if [ "$?" -eq "139" ]; then surfFailed=true;
-else
-    # copy stuff
-    cp ${pid}.txt -r ${expPath}
-    cp ${pid}_residue.txt -r ${expPath}
-    cp -r results.txt ${expPath}
-    rm results.txt;
-    # do pracpa
-fi
+#(echo 1;echo ${pdbID}.pdb;echo 1.4;echo 1;echo ; echo;) | ./surfrace5_0_linux_64bit >> /dev/null
+#
+#if [ "$?" -eq "139" ]; then surfFailed=true;
+#else
+#    # copy stuff
+#    cp ${pid}.txt -r ${expPath}
+#    cp ${pid}_residue.txt -r ${expPath}
+#    cp -r results.txt ${expPath}
+#    rm results.txt;
+#    # do pracpa
+#fi
 
 
 
